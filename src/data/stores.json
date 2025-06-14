@@ -1,0 +1,744 @@
+[
+    {
+      "name": "Pizza Hut Puregold Dau",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 045-887-1111",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 15.174420,
+      "longitude": 120.588966
+    },
+    {
+      "name": "Pizza Hut Petron Subic",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 047-250-2222",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 14.824314,
+      "longitude": 120.286354
+    },
+    {
+      "name": "Pizza Hut Baguio La Trinidad",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 072-888-1798",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 16.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza hut Nepo Mall Angeles",
+      "hours": "10:00 AM - 08:00 PM",
+      "phone": "(02) 8911-1111 / 045-887-4050",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 15.166667,
+      "longitude": 120.566667
+    },
+    {
+      "name": "Pizza Hut Baguio Marcos Highway",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / (074) 445-1111",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 16.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza Hut Baguio Session Road",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 074-446-6320",
+      "services": ["Pickup"],
+      "latitude": 15.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza Hut Starmall Bulacan",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / (044) 769-1658",
+      "services": ["Pickup"],
+      "latitude": 15.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza Hut SM Tarlac",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / 045-606-0147",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 15.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza Hut Nepomall Dagupan",
+      "hours": "10:00 AM - 08:00 PM",
+      "phone": "(02) 8911-1111 / 246-0726",
+      "services": ["Delivery", "Pickup"],
+      "latitude": 15.037882,
+      "longitude": 120.624502
+    },
+    {
+      "name": "Pizza Hut SM San Jose Del Monte",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / 044-913-2434",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Pampanga",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / (045) 4552-772",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Baliuag",
+      "hours": "12:06 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / (044) 761-0779",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Cabanatuan",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / (046) 951 0360",
+      "services": ["Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Clark",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / 045-499-0083",
+      "services": ["Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut Baguio City Hall",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 074-665-2222",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut Guiguinto",
+      "hours": "10:00 AM - 02:00 AM",
+      "phone": "(02) 8911-1111 / 044-931-7999",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut Vista Mall Malolos",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / (044) 931-1111",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Baguio",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111 / 074-619779",
+      "services": ["Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizzahut Cabanatuan",
+      "hours": "10:00 AM - 08:00 PM",
+      "phone": "(02) 8911-1111 / (044) 600 9111",
+      "services": ["Delivery", "Pickup"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+      "name": "Pizza Hut SM Tuguegarao",
+      "hours": "10:00 AM - 09:00 PM",
+      "phone": "(02) 8911-1111",
+      "services": ["Pickup", "Dine-In"],
+      "latitude": null,
+      "longitude": null
+    },
+    {
+        "name": "Pizza Hut Ali Mall (Araneta City)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 8912-1011",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Trinoma (Quezon City)",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111 / 8901-3633",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Sta. Lucia (Marikina)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 681-5238",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Megamall Bistro",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111 / 8638-5935",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Bistro Robinsons Galleria",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Taytay",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111 / 661-1971",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Bistro SM North",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "8911-1111",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Sucat",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 801-1380",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Ever Commonwealth",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 8931 0126",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Fisher Mall",
+        "hours": "11:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 8294-1456",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM San Mateo",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 645-4836",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Gateway Food Express (Araneta City)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 8911-8475",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut New Frontier (Araneta City)",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 8255-0638",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Market Market",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 856-7920",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut New Farmers (Araneta City)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 8911-1931",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Robinsons Ermita",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 536-5656",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Bicutan",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Marikina",
+        "hours": "11:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / 8477-1817",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Fairview",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 935-0040",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Manila",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM San Lazaro",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Southmall",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut SM Mall of Asia 2",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+      },
+      {
+        "name": "Pizza Hut Gateway Mall 2 (Araneta City)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup", "Dine-In"],
+        "latitude": null,
+        "longitude": null
+      },
+    {
+        "name": "Pizza Hut Bacoor",
+        "hours": "10:00 AM - 12:00 AM",
+        "phone": "(02) 8911-1111 / (046) 417-9004",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Binan",
+        "hours": "10:00 AM - 12:00 AM",
+        "phone": "(02) 8911-1111 / (049) 839-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Dasmarinas",
+        "hours": "10:00 AM - 02:00 AM",
+        "phone": "(02) 8911-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Wind (Tagaytay, Cavite)",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111 / (046) 443-2687",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Pacific Mall Legazpi",
+        "hours": "10:00 AM - 08:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Ayala Imus",
+        "hours": "10:00 AM - 02:00 AM",
+        "phone": "(02) 8911-1111 / (046) 476-0651",
+        "services": ["Pickup"],
+        "latitude": 14.369835950990385,
+        "longitude": 120.9394887926486
+    },
+    {
+        "name": "Pizza Hut SM Sta. Rosa",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / (049) 534-4446",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM San Pablo",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (049) 521 0074",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Robinsons Dasmarinas",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (046) 852-2002",
+        "services": ["Delivery", "Pickup"],
+        "latitude": 14.326318,
+        "longitude": 120.936006
+    },
+    {
+        "name": "Pizza Hut Robinsons Imus",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (046) 536-5656",
+        "services": ["Delivery", "Pickup"],
+        "latitude": 14.824314,
+        "longitude": 120.286354
+    },
+    {
+        "name": "Pizza Hut Robinsons Lipa",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (043) 757-3599",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Naga",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (054) 871-0037",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Bacoor",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (046) 416-3861",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Molino",
+        "hours": "10:00 AM - 02:00 AM",
+        "phone": "(02) 8911-1111 / (046) 474-3110",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Batangas",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (043) 722-0027",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Calamba",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / (049) 530-0143",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Lucena",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (042) 373-2211",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Lipa",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (043) 784-0244",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Dasmarinas",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (046) 416-5005",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Solenad 2 (Laguna)",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Southwoods Mall",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Robertson Plaza",
+        "hours": "10:00 AM - 08:00 PM",
+        "phone": "(02) 8911-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Tanza Cavite",
+        "hours": "10:00 AM - 12:00 AM",
+        "phone": "(02) 8911-1111 / (046) 431-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Fuente Cebu",
+        "hours": "10:00 AM - 02:00 AM",
+        "phone": "(02) 8911-1111 / (032) 253-7000",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Gaisano Davao",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (082) 222-2222",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Robinsons Bacolod",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (034) 441 0101",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Ayala Cebu",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (032) 231-7336",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Bohol",
+        "hours": "10:00 AM - 07:00 PM",
+        "phone": "(02) 8911-1111 / (038) 411-4225",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Seaside Cebu",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / 0908-8816166",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut KCC Mall of Marbel (South Cotabato)",
+        "hours": "10:00 AM - 08:00 PM",
+        "phone": "(02) 8911-1111 / (083) 553-2211",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Parkmall Cebu",
+        "hours": "10:00 AM - 11:00 PM",
+        "phone": "(02) 8911-1111 / (032) 266-0369",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Robinsons Roxas",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (036) 651-0308",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Bacolod",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / (034) 468-0088",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Cagayan de Oro",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (088) 859-1119",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Cebu",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (032) 266 6110",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Davao",
+        "hours": "10:00 AM - 10:00 PM",
+        "phone": "(02) 8911-1111 / (082) 295-1767",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM General Santos",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (083) 887-0308",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut SM Iloilo",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (033) 330 1196",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Festive Walk Iloilo",
+        "hours": "10:00 AM - 12:00 AM",
+        "phone": "(02) 8911-1111 / (033) 338 3838",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut KCC Gen San",
+        "hours": "10:00 AM - 09:00 PM",
+        "phone": "(02) 8911-1111 / (083) 553 2211",
+        "services": ["Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "name": "Pizza Hut Plaza Divisoria Cagayan De Oro",
+        "hours": "10:00 AM - 12:00 AM",
+        "phone": "(02) 8911-1111",
+        "services": ["Delivery", "Pickup"],
+        "latitude": null,
+        "longitude": null
+    },
+    {
+        "store": "Pizza Hut Alabang",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup"]
+      },
+      {
+        "store": "Pizza Hut Angono",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup"]
+      },
+      {
+        "store": "Pizza Hut Antipolo",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup"]
+      },
+      {
+        "store": "Pizza Hut Aseana (Parañaque)",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup"]
+      },
+      {
+        "store": "Pizza Hut Banawe",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup"]
+      },
+      {
+        "store": "Pizza Hut Cherry Congressional",
+        "hours": "11:00 AM - 10:00 PM",
+        "numbers": ["(02) 8911-1111", "8287-5247"],
+        "services": ["Pickup"]
+      },
+      {
+        "store": "Pizza Hut Ayala Marikina",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup", "Dine-In"]
+      },
+      {
+        "store": "Pizza Hut Drive & Dine (Valenzuela)",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup", "Dine-In"]
+      },
+      {
+        "store": "Pizza Hut Marulas Valenzuela",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02)8911-1111"],
+        "services": ["Delivery", "Pickup", "Dine-In"]
+      },
+      {
+        "store": "Pizza Hut Pioneer Center",
+        "hours": "10:00 AM - 02:00 AM",
+        "numbers": ["(02) 8911-1111"],
+        "services": ["Delivery", "Pickup", "Dine-In"]
+      }
+]
+    
+  
