@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import OrderPreferenceDisplay from "./OrderPreferenceDisplay";
 
 const navItems = [
   { name: "Deals", href: "/deals" },
@@ -28,8 +27,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white">
-      <OrderPreferenceDisplay />
-      <div className="max-w-[1450px] mx-auto px-8 pb-6 overflow-x-hidden">
+      <div className="h-24 max-w-[1450px] mx-auto px-8 pb-6 overflow-x-hidden">
         <div className="flex items-center justify-between gap-4 h-full">
           <Link href="/" className="text-2xl font-bold shrink-0">
             Bella Pizza
@@ -53,9 +51,9 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     onClick={() => setActiveIndex(index)}
-                    className={`text-lg relative z-10 hover:text-white/80 transition-colors duration-300 ${
+                    className={`text-lg relative z-10 hover:text-black/80 transition-colors duration-300 ${
                       activeIndex === index
-                        ? 'font-["Playfair_Display"] italic font-extrabold uppercase'
+                        ? 'font-["Playfair_Display"] italic font-extrabold uppercase text-red-600'
                         : ""
                     }`}
                   >
@@ -74,7 +72,7 @@ export default function Navbar() {
                 >
                   <div className="relative w-full h-full">
                     <motion.div
-                      className="absolute top-0 left-0 h-full bg-white"
+                      className="absolute top-0 left-0 h-full bg-black"
                       initial={{ width: "0%" }}
                       animate={{
                         width: hoveredIndex === index ? "50%" : "0%",
@@ -82,7 +80,7 @@ export default function Navbar() {
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     />
                     <motion.div
-                      className="absolute top-0 right-0 h-full bg-white"
+                      className="absolute top-0 right-0 h-full bg-black"
                       initial={{ width: "0%" }}
                       animate={{
                         width: hoveredIndex === index ? "50%" : "0%",
@@ -95,7 +93,7 @@ export default function Navbar() {
                 {/* Circle animation */}
                 {activeIndex === index && (
                   <motion.div
-                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-600"
                     initial={{
                       x: -20,
                       opacity: 0,

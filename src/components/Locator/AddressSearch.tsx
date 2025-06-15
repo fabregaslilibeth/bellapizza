@@ -67,6 +67,7 @@ export default function AddressSearch() {
   };
 
   const handleSearch = (place: Place) => {
+    setSearch(place.municipality + ", " + place.province);
     setTempAddress(place);
     setFilteredPlaces([]);
   };
