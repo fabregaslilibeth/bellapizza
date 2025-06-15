@@ -6,6 +6,7 @@ import { OrderPreferenceProvider } from "@/context/OrderPreferenceContext";
 import ChangeAddress from "@/components/Locator/ChangeAddress";
 import Locator from "@/components/Locator";
 import NearestStores from "@/components/Locator/NearestStores";
+import OrderPreferenceDisplay from "@/components/OrderPreferenceDisplay";
 
 const roboto = Roboto_Flex({
   variable: "--font-roboto",
@@ -30,15 +31,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.variable} ${roboto.variable} antialiased relative overflow-x-hidden`}
+        className={`${nunito.variable} ${roboto.variable} antialiased relative overflow-x-hidden min-h-screen`}
       >
         <OrderPreferenceProvider>
+        <OrderPreferenceDisplay />
           <Navbar />
           <Locator />
           <ChangeAddress />
           <NearestStores />
           {children}
-        
         </OrderPreferenceProvider>
       </body>
     </html>

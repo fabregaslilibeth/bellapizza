@@ -2,6 +2,7 @@
 
 import { useOrderPreference } from "@/context/OrderPreferenceContext";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function OrderPreferenceDisplay() {
   const { setIsLocatorOpen, orderPreference, address, selectedStore, setIsChangeAddressVisible } =
@@ -61,10 +62,24 @@ export default function OrderPreferenceDisplay() {
   };
 
   return (
-    <div className="h-16 w-full">
-      <div className="max-w-7xl mx-4 xl:mx-auto mt-4">
-        <div className="px-4 py-2 sm:w-1/2 lg:w-4/12 flex items-center gap-4 border border-gray-300 rounded-md">
-          <p className="shrink-0">
+    <div className="fixed bottom-20 right-0 w-96 z-50 h-16">
+      <div className="mt-4">
+        <motion.div 
+          className="px-4 py-2 sm:w-1/2 lg:w-84 flex items-center gap-4 border border-black rounded-md bg-green-50"
+          whileHover={{ scale: 1.02, boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <motion.p 
+            className="shrink-0"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 0.2,
+            }}
+          >
             <Image
               src="https://static.phdvasia.com/global/icons/icon_delivery.gif"
               alt="Delivery"
@@ -72,9 +87,9 @@ export default function OrderPreferenceDisplay() {
               height={36}
               className="w-9 h-9"
             />
-          </p>
+          </motion.p>
           {getDisplayContent()}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
