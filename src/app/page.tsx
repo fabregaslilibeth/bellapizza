@@ -1,26 +1,18 @@
 'use client';
 
-import Navbar from "@/components/Navbar";
-import Image from 'next/image';
-import Locator from "@/components/Locator";
-
 export default function Home() {
   return (
     <>
-      <Navbar />
-      
       {/* Banner Section */}
-      <section className="relative h-[500px] w-full">
-        <Image
+      <section className="relative w-full">
+        {/* <Image
           src="https://www.shutterstock.com/image-vector/pepperoni-pizza-banner-ads-on-260nw-1505158397.jpg"
           alt="Banner Image"
           fill
           className="object-cover"
           priority
-        />
-        <Locator />
+        /> */}
       </section>
-
       {/* Content Section */}
       <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold mb-8">Our Services</h2>

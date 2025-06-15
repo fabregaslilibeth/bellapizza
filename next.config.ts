@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.phdvasia.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

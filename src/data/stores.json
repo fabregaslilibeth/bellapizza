@@ -404,8 +404,8 @@
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / (049) 534-4446",
         "services": ["Pickup"],
-        "latitude": null,
-        "longitude": null
+        "latitude": 14.369835950990385,
+        "longitude": 120.9394887926486
     },
     {
         "name": "Pizza Hut SM San Pablo",

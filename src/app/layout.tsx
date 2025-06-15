@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto_Flex, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { OrderPreferenceProvider } from "@/context/OrderPreferenceContext";
+import ChangeAddress from "@/components/Locator/ChangeAddress";
+import Locator from "@/components/Locator";
+import NearestStores from "@/components/Locator/NearestStores";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto_Flex({
+  variable: "--font-roboto",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const nunito = Nunito_Sans({
+  variable: "--font-nunito",
   subsets: ["latin"],
 });
 
@@ -26,10 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${nunito.variable} ${roboto.variable} antialiased relative overflow-x-hidden`}
       >
-        <Navbar />
-        {children}
+        <OrderPreferenceProvider>
+          <Navbar />
+          <Locator />
+          <ChangeAddress />
+          <NearestStores />
+          {children}
+        
+        </OrderPreferenceProvider>
       </body>
     </html>
   );

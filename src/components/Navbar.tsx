@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import OrderPreferenceDisplay from "./OrderPreferenceDisplay";
 
 const navItems = [
   { name: "Deals", href: "/deals" },
@@ -19,20 +20,21 @@ export default function Navbar() {
 
   useEffect(() => {
     const path = window.location.pathname;
-    const activeItem = navItems.find(item => item.href === path);
+    const activeItem = navItems.find((item) => item.href === path);
     if (activeItem) {
       setActiveIndex(navItems.indexOf(activeItem));
     }
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-8 py-6">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold">
+    <nav className="bg-white">
+      <OrderPreferenceDisplay />
+      <div className="max-w-[1450px] mx-auto px-8 pb-6 overflow-x-hidden">
+        <div className="flex items-center justify-between gap-4 h-full">
+          <Link href="/" className="text-2xl font-bold shrink-0">
             Bella Pizza
           </Link>
-          
+
           <div className="flex items-center space-x-8">
             {navItems.map((item, index) => (
               <motion.div
@@ -44,7 +46,7 @@ export default function Navbar() {
                 <motion.div
                   className="relative"
                   animate={{
-                    y: hoveredIndex === index ? -2 : 0
+                    y: hoveredIndex === index ? -2 : 0,
                   }}
                   transition={{ duration: 0.2 }}
                 >
@@ -52,19 +54,21 @@ export default function Navbar() {
                     href={item.href}
                     onClick={() => setActiveIndex(index)}
                     className={`text-lg relative z-10 hover:text-white/80 transition-colors duration-300 ${
-                      activeIndex === index ? 'font-["Playfair_Display"] italic font-extrabold uppercase' : ''
+                      activeIndex === index
+                        ? 'font-["Playfair_Display"] italic font-extrabold uppercase'
+                        : ""
                     }`}
                   >
                     {item.name}
                   </Link>
                 </motion.div>
-                
+
                 {/* Solid line that meets in the middle */}
                 <motion.div
                   className="absolute -bottom-1 left-0 right-0 h-0.5 overflow-hidden"
                   initial={{ opacity: 0 }}
                   animate={{
-                    opacity: hoveredIndex === index ? 1 : 0
+                    opacity: hoveredIndex === index ? 1 : 0,
                   }}
                   transition={{ duration: 0.2 }}
                 >
@@ -73,7 +77,7 @@ export default function Navbar() {
                       className="absolute top-0 left-0 h-full bg-white"
                       initial={{ width: "0%" }}
                       animate={{
-                        width: hoveredIndex === index ? "50%" : "0%"
+                        width: hoveredIndex === index ? "50%" : "0%",
                       }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     />
@@ -81,7 +85,7 @@ export default function Navbar() {
                       className="absolute top-0 right-0 h-full bg-white"
                       initial={{ width: "0%" }}
                       animate={{
-                        width: hoveredIndex === index ? "50%" : "0%"
+                        width: hoveredIndex === index ? "50%" : "0%",
                       }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     />
@@ -92,20 +96,20 @@ export default function Navbar() {
                 {activeIndex === index && (
                   <motion.div
                     className="absolute -right-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white"
-                    initial={{ 
+                    initial={{
                       x: -20,
                       opacity: 0,
-                      scale: 0.5
+                      scale: 0.5,
                     }}
-                    animate={{ 
+                    animate={{
                       x: 0,
                       opacity: 1,
-                      scale: 1
+                      scale: 1,
                     }}
                     transition={{
                       delay: 0.3,
                       duration: 0.4,
-                      ease: "easeOut"
+                      ease: "easeOut",
                     }}
                   />
                 )}
@@ -116,4 +120,4 @@ export default function Navbar() {
       </div>
     </nav>
   );
-} 
+}
