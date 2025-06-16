@@ -55,11 +55,10 @@ export default function ChangeAddress() {
   };
 
   return (
-
    <>
-   <div className="fixed inset-0 bg-black opacity-60" onClick={() => setIsChangeAddressVisible(false)} />
-    <div className="absolute top-1/4 transform -translate-y-1/4 w-full">
-      <div className="w-full sm:w-3/4 md:w-1/2 2xl:w-1/4 h-full mx-auto pt-4 bg-white shadow-lg rounded-lg border border-gray-300">
+   <div className="fixed inset-0 bg-black opacity-60 z-40"/>
+    <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={() => setIsChangeAddressVisible(false)} >
+      <div className="w-full sm:w-3/4 md:w-1/2 2xl:w-1/4 bg-white shadow-lg rounded-lg border border-gray-300" onClick={(e) => e.stopPropagation()}>
         {isChangingStore && (
           <>
             <div className="px-4 py-4 border-b border-gray-300">

@@ -35,10 +35,10 @@ interface Places {
 const typedPlaces = places as Places;
 
 export default function AddressSearch() {
-  const [search, setSearch] = useState("");
-  const [tempAddress, setTempAddress] = useState<Place | null>(null);
+  const [ search, setSearch] = useState("");
+  const [ tempAddress, setTempAddress] = useState<Place | null>(null);
   const { setAddress } = useOrderPreference();
-  const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
+  const [ filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
 
   useEffect(() => {
     const filtered = [];

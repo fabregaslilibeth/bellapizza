@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import LocationButton from "./LocationButton";
@@ -9,16 +9,6 @@ import { useOrderPreference } from "@/context/OrderPreferenceContext";
 
 const Locator = () => {
   const { orderPreference, setOrderPreference, address, selectedStore, isLocatorOpen, setIsLocatorOpen } = useOrderPreference();
-
-  useEffect(() => {
-    // Prevent scrolling when component mounts
-    document.body.style.overflow = "hidden";
-
-    // Re-enable scrolling when component unmounts
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
 
   // Don't render if either address or selectedStore is set
   if (address || selectedStore) {
@@ -36,10 +26,8 @@ const Locator = () => {
         animate={{ opacity: 0.6 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed inset-0 bg-black" 
-        onClick={() => setIsLocatorOpen(false)} 
       />
-      <div className="absolute top-1/2 transform -translate-y-1/2 w-full">
+      <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center" onClick={() => setIsLocatorOpen(false)} >
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,7 +37,8 @@ const Locator = () => {
             damping: 25,
             stiffness: 300
           }}
-          className="w-11/12 sm:w-3/4 md:w-1/2 2xl:w-1/4 h-full mx-auto bg-white shadow-lg rounded-lg"
+          className="w-11/12 sm:w-3/4 md:w-1/2 2xl:w-1/4 bg-white shadow-lg rounded-lg"
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Tabs */}
           <div className="flex w-full relative">
@@ -78,6 +67,7 @@ const Locator = () => {
                   ? "bg-white -mt-1 rounded-t-lg"
                   : "bg-gray-200 border-t-1 border-l-1 border-gray-300"
               }`}
+              onClick={(e) => e.stopPropagation()}
               onClick={() => setOrderPreference("pickup")}
             >
               <Image
