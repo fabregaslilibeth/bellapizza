@@ -15,7 +15,10 @@ interface Deal {
     name: string;
   }[];
   image: {
+    desktop_detail: string;
+    mobile_detail: string;
     desktop_thumbnail: string;
+    mobile_thumbnail: string;
   };
   price_without_tax: number;
 }
@@ -43,7 +46,7 @@ export default function DealsPage() {
       description: deal.marketing_description,
       price: deal.price,
       originalPrice: deal.price_without_tax,
-      image: deal.image.desktop_thumbnail,
+      image: deal.image.mobile_detail,
     };
   });
 
@@ -76,14 +79,14 @@ export default function DealsPage() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDeals.map((deal) => (
           <div
             key={deal.id}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <div className="relative h-auto max-h-62">
-              <img src={deal.image} alt={deal.name} className="w-auto h-auto" />
+              <img src={deal.image} alt={deal.name} className="w-auto h-80" />
               <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">
                 {Math.round(
                   ((deal.originalPrice - deal.price) / deal.originalPrice) * 100
