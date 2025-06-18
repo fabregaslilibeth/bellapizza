@@ -36,9 +36,9 @@ export default function RootLayout({
         <OrderPreferenceProvider>
         <OrderPreferenceDisplay />
           <Navbar />
-          <Locator />
+          {/* <Locator />
           <ChangeAddress />
-          <NearestStores />
+          <NearestStores /> */}
           {children}
         </OrderPreferenceProvider>
       </body>

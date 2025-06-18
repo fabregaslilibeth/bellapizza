@@ -1,5 +1,6 @@
 "use client";
 
+import Pizza from "@/components/Pizza";
 import { pizza } from "@/data/pizza";
 import Image from "next/image";
 import { useState } from "react";
@@ -9,7 +10,7 @@ interface Deal {
   name: string;
   name_en: string;
   marketing_description: string;
-  price: number;
+  display_price: number;
   originalPrice: number;
   menu_attributes: {
     name: string;
@@ -21,9 +22,14 @@ interface Deal {
     mobile_thumbnail: string;
   };
   price_without_tax: number;
+  first_layers: {
+    price_master: number;
+    short_name: string;
+    id: number;
+  }[];
 }
 
-export default function DealsPage() {
+export default function PizzaPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const categories = pizza.info.map((category) => {
     return {
@@ -44,12 +50,13 @@ export default function DealsPage() {
       name: deal.name,
       name_en: deal.name_en,
       description: deal.marketing_description,
-      price: deal.price,
+      price: deal.display_price,
       originalPrice: deal.price_without_tax,
       image: deal.image.mobile_detail,
+      variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
     };
   });
-
+  console.log(filteredDeals);
   return (
     <div className="min-h-screen bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex gap-4 mb-12 overflow-x-auto">
@@ -79,44 +86,9 @@ export default function DealsPage() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredDeals.map((deal) => (
-          <div
-            key={deal.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-          >
-            <div className="relative h-auto max-h-62">
-              <img src={deal.image} alt={deal.name} className="w-auto h-80" />
-              <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">
-                {Math.round(
-                  ((deal.originalPrice - deal.price) / deal.originalPrice) * 100
-                )}
-                % OFF
-              </div>
-            </div>
-            <div className="p-4">
-              <span className="text-sm text-blue-600 font-medium">
-                {deal.category}
-              </span>
-              <h3 className="text-xl font-semibold text-gray-900 mt-1">
-                {deal.name}
-              </h3>
-              <p className="text-gray-600 mt-2">{deal.description} asdas</p>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <span className="text-2xl font-bold text-gray-900">
-                    P{deal.price}
-                  </span>
-                  <span className="ml-2 text-sm text-gray-500 line-through">
-                    P{deal.originalPrice}
-                  </span>
-                </div>
-                <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300">
-                  View Deal
-                </button>
-              </div>
-            </div>
-          </div>
+          <Pizza key={deal.id} deal={deal} />
         ))}
       </div>
     </div>
