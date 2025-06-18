@@ -12,7 +12,8 @@
     "framer-motion": "^12.17.3",
     "next": "15.3.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss-clip-path": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
