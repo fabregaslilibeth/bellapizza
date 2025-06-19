@@ -1,7 +1,7 @@
 'use client';
 
-import { useOrderPreference } from '@/context/OrderPreferenceContext';
 import { useState } from 'react';
+import { useOrderPreference } from '@/context/OrderPreferenceContext';
 
 export default function LocationButton() {
   const [ isLoadingLocation, setIsLoadingLocation ] = useState(false);

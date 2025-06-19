@@ -1,23 +1,8 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { Address, Store } from '../types';
 
 type OrderPreference = 'delivery' | 'pickup';
-
-interface Address {
-  province?: string;
-  municipality?: string;
-  address?: string;
-}
-
-interface Store {
-  name: string;
-  hours: string;
-  phone: string;
-  services: string[];
-  latitude: number;
-  longitude: number;
-  distance: number;
-}
 
 interface OrderPreferenceContextType {
   isLocatorOpen: boolean;
@@ -38,14 +23,82 @@ interface OrderPreferenceContextType {
 
 const OrderPreferenceContext = createContext<OrderPreferenceContextType | undefined>(undefined);
 
+// Helper functions for localStorage
+const saveToLocalStorage = (key: string, value: unknown): void => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+};
+
+const loadFromLocalStorage = (key: string, defaultValue: unknown): unknown => {
+  if (typeof window !== 'undefined') {
+    const item = localStorage.getItem(key);
+    if (item) {
+      try {
+        return JSON.parse(item);
+      } catch (error) {
+        console.warn(`Failed to parse localStorage item "${key}":`, error);
+        // Remove corrupted data
+        localStorage.removeItem(key);
+        return defaultValue;
+      }
+    }
+    return defaultValue;
+  }
+  return defaultValue;
+};
+
 export function OrderPreferenceProvider({ children }: { children: ReactNode }) {
-  const [isLocatorOpen, setIsLocatorOpen] = useState<boolean>(true);
-  const [orderPreference, setOrderPreference] = useState<OrderPreference>('delivery');
-  const [address, setAddress] = useState<Address | null>(null);
-  const [nearestStores, setNearestStores] = useState<Store[]>([]);
-  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
-  const [isNearestStoresVisible, setIsNearestStoresVisible] = useState<boolean>(false);
-  const [isChangeAddressVisible, setIsChangeAddressVisible] = useState<boolean>(false);
+  const [isLocatorOpen, setIsLocatorOpen] = useState<boolean>(() => 
+    loadFromLocalStorage('isLocatorOpen', true) as boolean
+  );
+  const [orderPreference, setOrderPreference] = useState<OrderPreference>(() => 
+    loadFromLocalStorage('orderPreference', 'delivery') as OrderPreference
+  );
+  const [address, setAddress] = useState<Address | null>(() => 
+    loadFromLocalStorage('address', null) as Address | null
+  );
+  const [nearestStores, setNearestStores] = useState<Store[]>(() => 
+    loadFromLocalStorage('nearestStores', []) as Store[]
+  );
+  const [selectedStore, setSelectedStore] = useState<Store | null>(() => 
+    loadFromLocalStorage('selectedStore', null) as Store | null
+  );
+  const [isNearestStoresVisible, setIsNearestStoresVisible] = useState<boolean>(() => 
+    loadFromLocalStorage('isNearestStoresVisible', false) as boolean
+  );
+  const [isChangeAddressVisible, setIsChangeAddressVisible] = useState<boolean>(() => 
+    loadFromLocalStorage('isChangeAddressVisible', false) as boolean
+  );
+
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    saveToLocalStorage('isLocatorOpen', isLocatorOpen);
+  }, [isLocatorOpen]);
+
+  useEffect(() => {
+    saveToLocalStorage('orderPreference', orderPreference);
+  }, [orderPreference]);
+
+  useEffect(() => {
+    saveToLocalStorage('address', address);
+  }, [address]);
+
+  useEffect(() => {
+    saveToLocalStorage('nearestStores', nearestStores);
+  }, [nearestStores]);
+
+  useEffect(() => {
+    saveToLocalStorage('selectedStore', selectedStore);
+  }, [selectedStore]);
+
+  useEffect(() => {
+    saveToLocalStorage('isNearestStoresVisible', isNearestStoresVisible);
+  }, [isNearestStoresVisible]);
+
+  useEffect(() => {
+    saveToLocalStorage('isChangeAddressVisible', isChangeAddressVisible);
+  }, [isChangeAddressVisible]);
 
   return (
     <OrderPreferenceContext.Provider value={{ 

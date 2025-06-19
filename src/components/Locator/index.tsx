@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,7 +68,6 @@ const Locator = () => {
                   ? "bg-white -mt-1 rounded-t-lg"
                   : "bg-gray-200 border-t-1 border-l-1 border-gray-300"
               }`}
-              onClick={(e) => e.stopPropagation()}
               onClick={() => setOrderPreference("pickup")}
             >
               <Image
