@@ -1,36 +1,7 @@
 import { useState, useEffect } from "react";
 import { useOrderPreference } from "@/context/OrderPreferenceContext";
 import places from "@/data/places.json";
-
-interface Place {
-  province: string;
-  municipality: string;
-}
-
-interface BarangayList {
-  barangay_list: string[];
-}
-
-interface MunicipalityList {
-  [key: string]: BarangayList;
-}
-
-interface Province {
-  municipality_list: MunicipalityList;
-}
-
-interface ProvinceList {
-  [key: string]: Province;
-}
-
-interface Region {
-  region_name: string;
-  province_list: ProvinceList;
-}
-
-interface Places {
-  [key: string]: Region;
-}
+import { Place, Places } from "@/types";
 
 const typedPlaces = places as Places;
 

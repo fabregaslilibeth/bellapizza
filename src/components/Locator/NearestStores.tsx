@@ -1,18 +1,9 @@
 'use client';
 
-import { useOrderPreference } from '@/context/OrderPreferenceContext';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface Store {
-  name: string;
-  hours: string;
-  phone: string;
-  services: string[];
-  latitude: number;
-  longitude: number;
-  distance: number;
-}
+import { useOrderPreference } from '@/context/OrderPreferenceContext';
+import { Store } from '@/types';
 
 export default function NearestStores() {
   const { nearestStores, setSelectedStore, isNearestStoresVisible, setIsNearestStoresVisible } = useOrderPreference();
