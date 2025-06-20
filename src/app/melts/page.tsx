@@ -1,11 +1,11 @@
 "use client";
 
-import { drinks } from "@/data/drinks";
+import { melts } from "@/data/melts";
 import Image from "next/image";
 import { useState } from "react";
 import Pizza from "../pizza/page";
 
-interface Drinks {
+interface Melts {
   id: number;
   name: string;
   name_en: string;
@@ -24,21 +24,21 @@ interface Drinks {
   price_without_tax: number;
 }
 
-export default function DrinksPage() {
+export default function MeltsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const categories = drinks.info.map((category) => {
+  const categories = melts.info.map((category) => {
     return {
       name: category?.name,
       image: category?.image?.icon,
     };
   });
 
-  const filteredDeals = drinks.items.filter((deal: Drinks) => {
+  const filteredDeals = melts.items.filter((deal: Melts) => {
     if (activeCategory === "All") {
       return true;
     }
     return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Drinks) => {
+  }).map((deal: Melts) => {
     return {
       id: deal.id,
       category: deal.menu_attributes?.[0]?.name,

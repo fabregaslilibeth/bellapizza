@@ -1,54 +1,49 @@
 "use client";
 
-import { drinks } from "@/data/drinks";
+import { deals } from "@/data/deals";
 import Image from "next/image";
 import { useState } from "react";
-import Pizza from "../pizza/page";
 
-interface Drinks {
+interface Deal {
   id: number;
   name: string;
   name_en: string;
   marketing_description: string;
-  display_price: number;
+  price: number;
   originalPrice: number;
   menu_attributes: {
     name: string;
   }[];
   image: {
     desktop_detail: string;
-    mobile_detail: string;
-    desktop_thumbnail: string;
-    mobile_thumbnail: string;
   };
   price_without_tax: number;
 }
 
-export default function DrinksPage() {
+export default function DealsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const categories = drinks.info.map((category) => {
+  const categories = deals.info.map((category) => {
     return {
       name: category?.name,
       image: category?.image?.icon,
     };
   });
 
-  const filteredDeals = drinks.items.filter((deal: Drinks) => {
+  const filteredDeals = deals.items.filter((deal: Deal) => {
     if (activeCategory === "All") {
       return true;
     }
     return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Drinks) => {
+  }).map((deal: Deal) => {
     return {
       id: deal.id,
       category: deal.menu_attributes?.[0]?.name,
       name: deal.name,
       name_en: deal.name_en,
       description: deal.marketing_description,
-      price: deal.display_price,
+      price: deal.price,
       originalPrice: deal.price_without_tax,
-      image: deal.image.mobile_detail,
-      variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
+      image: deal.image.desktop_detail,
     };
   });
 
@@ -83,7 +78,42 @@ export default function DrinksPage() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredDeals.map((deal) => (
-          <Pizza key={deal.id} deal={deal} />
+          <div
+            key={deal.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+          >
+            <div className="relative h-auto">
+              <img src={deal.image} alt={deal.name} className="w-auto h-auto" />
+              <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">
+                {Math.round(
+                  ((deal.originalPrice - deal.price) / deal.originalPrice) * 100
+                )}
+                % OFF
+              </div>
+            </div>
+            <div className="p-4">
+              <span className="text-sm text-blue-600 font-medium">
+                {deal.category}
+              </span>
+              <h3 className="text-xl font-semibold text-gray-900 mt-1">
+                {deal.name}
+              </h3>
+              <p className="text-gray-600 mt-2">{deal.description} asdas</p>
+              <div className="mt-4 flex items-center justify-between">
+                <div>
+                  <span className="text-2xl font-bold text-gray-900">
+                    P{deal.price}
+                  </span>
+                  <span className="ml-2 text-sm text-gray-500 line-through">
+                    P{deal.originalPrice}
+                  </span>
+                </div>
+                <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-300">
+                  View Deal
+                </button>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
