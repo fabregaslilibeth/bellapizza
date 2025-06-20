@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { melts } from "@/data/melts";
 import Image from "next/image";
-import Pizza from "@/components/Pizza";
-import { wings } from "@/data/wings";
+import { useState } from "react";
+import Pizza from "../pizza/page";
 
-interface Deal {
+interface Melts {
   id: number;
   name: string;
   name_en: string;
@@ -22,28 +22,23 @@ interface Deal {
     mobile_thumbnail: string;
   };
   price_without_tax: number;
-  first_layers: {
-    price_master: number;
-    short_name: string;
-    id: number;
-  }[];
 }
 
-export default function Wings() {
+export default function MeltsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const categories = wings.info.map((category) => {
+  const categories = melts.info.map((category) => {
     return {
       name: category?.name,
       image: category?.image?.icon,
     };
   });
 
-  const filteredDeals = wings.items.filter((deal: Deal) => {
+  const filteredDeals = melts.items.filter((deal: Melts) => {
     if (activeCategory === "All") {
       return true;
     }
     return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Deal) => {
+  }).map((deal: Melts) => {
     return {
       id: deal.id,
       category: deal.menu_attributes?.[0]?.name,
@@ -56,7 +51,7 @@ export default function Wings() {
       variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
     };
   });
-  console.log(filteredDeals);
+
   return (
     <div className="min-h-screen bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex gap-4 mb-12 overflow-x-auto">
