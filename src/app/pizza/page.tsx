@@ -1,9 +1,9 @@
 "use client";
 
-import Pizza from "@/components/Pizza";
-import { pizza } from "@/data/pizza";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
+import ItemCard from "@/components/ItemCard";
+import { pizza } from "@/data/pizza";
 
 interface Deal {
   id: number;
@@ -38,7 +38,7 @@ export default function PizzaPage() {
     };
   });
 
-  const filteredDeals = pizza.items.filter((deal: Deal) => {
+  const filteredItems = pizza.items.filter((deal: Deal) => {
     if (activeCategory === "All") {
       return true;
     }
@@ -53,10 +53,11 @@ export default function PizzaPage() {
       price: deal.display_price,
       originalPrice: deal.price_without_tax,
       image: deal.image.mobile_detail,
+      mobile_image: deal.image.desktop_detail || deal.image.desktop_thumbnail,
       variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
     };
   });
-  console.log(filteredDeals);
+
   return (
     <div className="min-h-screen bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex gap-4 mb-12 overflow-x-auto">
@@ -87,8 +88,8 @@ export default function PizzaPage() {
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredDeals.map((deal) => (
-          <Pizza key={deal.id} deal={deal} />
+        {filteredItems.map((pizza, index) => (
+          <ItemCard key={pizza.id} item={pizza} index={index} />
         ))}
       </div>
     </div>
