@@ -5,28 +5,30 @@ import Image from "next/image";
 import ItemCard from "@/components/ItemCard";
 import { pizza } from "@/data/pizza";
 
-interface Deal {
+interface RawPizza {
   id: number;
   name: string;
-  name_en: string;
   marketing_description: string;
-  display_price: number;
-  originalPrice: number;
+  price: number;
+  price_master: number;
   menu_attributes: {
     name: string;
   }[];
   image: {
-    desktop_detail: string;
-    mobile_detail: string;
     desktop_thumbnail: string;
-    mobile_thumbnail: string;
   };
-  price_without_tax: number;
-  first_layers: {
-    price_master: number;
-    short_name: string;
+  category: {
+    name: {
+      en: string;
+    };
+  };
+  first_layers?: Array<{
     id: number;
-  }[];
+    name: string;
+    short_name: string;
+    price: number;
+    price_master: number;
+  }> | null;
 }
 
 export default function PizzaPage() {
@@ -38,23 +40,26 @@ export default function PizzaPage() {
     };
   });
 
-  const filteredItems = pizza.items.filter((deal: Deal) => {
+  const filteredItems = pizza.items.filter((deal: RawPizza) => {
     if (activeCategory === "All") {
       return true;
     }
     return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Deal) => {
+  }).map((deal: RawPizza) => {
     return {
-      id: deal.id,
+      id: deal.id.toString(),
       category: deal.menu_attributes?.[0]?.name,
       name: deal.name,
-      name_en: deal.name_en,
       description: deal.marketing_description,
-      price: deal.display_price,
-      originalPrice: deal.price_without_tax,
-      image: deal.image.mobile_detail,
-      mobile_image: deal.image.desktop_detail || deal.image.desktop_thumbnail,
-      variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
+      price: deal.price,
+      originalPrice: deal.price_master,
+      image: deal.image.desktop_thumbnail,
+      mobile_image: deal.image.desktop_thumbnail,
+      variations: deal.first_layers ? deal.first_layers.map(layer => ({
+        id: layer.id.toString(),
+        short_name: layer.short_name,
+        price: layer.price
+      })).sort((a, b) => a.price - b.price) : [],
     };
   });
 

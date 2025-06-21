@@ -9,6 +9,7 @@ const navItems = [
   { name: "Pizza", href: "/pizza" },
   { name: "Pasta", href: "/pasta" },
   { name: "Wings", href: "/wings" },
+  { name: "Melts", href: "/melts" },
   { name: "Sides", href: "/sides" },
   { name: "Drinks", href: "/drinks" },
 ];

@@ -5,20 +5,23 @@ import Image from "next/image";
 import { deals } from "@/data/deals";
 import DealCard from "@/components/DealCard";
 
-interface Deal {
+interface RawDeal {
   id: number;
   name: string;
-  name_en: string;
   marketing_description: string;
   price: number;
-  originalPrice: number;
+  price_master: number;
   menu_attributes: {
     name: string;
   }[];
   image: {
     desktop_detail: string;
   };
-  price_without_tax: number;
+  category: {
+    name: {
+      en: string;
+    };
+  };
 }
 
 export default function DealsPage() {
@@ -30,20 +33,19 @@ export default function DealsPage() {
     };
   });
 
-  const filteredDeals = deals.items.filter((deal: Deal) => {
+  const filteredDeals = deals.items.filter((deal: RawDeal) => {
     if (activeCategory === "All") {
       return true;
     }
     return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Deal) => {
+  }).map((deal: RawDeal) => {
     return {
-      id: deal.id,
+      id: deal.id.toString(),
       category: deal.menu_attributes?.[0]?.name,
       name: deal.name,
-      name_en: deal.name_en,
       description: deal.marketing_description,
       price: deal.price,
-      originalPrice: deal.price_without_tax,
+      originalPrice: deal.price_master,
       image: deal.image.desktop_detail,
     };
   });

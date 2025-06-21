@@ -1,85 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import { wings } from "@/data/wings";
 import DealCard from "@/components/DealCard";
 
-interface Deal {
+interface RawChicken {
   id: number;
   name: string;
-  name_en: string;
   marketing_description: string;
   price: number;
-  originalPrice: number;
-  menu_attributes: {
-    name: string;
-  }[];
+  min_price: number;
   image: {
-    desktop_detail: string;
+    mobile_detail: string;
   };
-  price_without_tax: number;
 }
 
-export default function DealsPage() {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const categories = wings.info.map((category) => {
+export default function WingsPage() {
+  const filteredItems = wings.items.map((chicken: RawChicken) => {
     return {
-      name: category?.name,
-      image: category?.image?.icon,
-    };
-  });
-
-  const filteredDeals = wings.items.filter((deal: Deal) => {
-    if (activeCategory === "All") {
-      return true;
-    }
-    return deal.menu_attributes?.[0]?.name === activeCategory;
-  }).map((deal: Deal) => {
-    return {
-      id: deal.id,
-      category: deal.menu_attributes?.[0]?.name,
-      name: deal.name,
-      name_en: deal.name_en,
-      description: deal.marketing_description,
-      price: deal.price || deal.min_price,
-      originalPrice: deal.originalPrice,
-      image: deal.image.mobile_detail,
+      id: chicken.id.toString(),
+      name: chicken.name,
+      description: chicken.marketing_description,
+      price: chicken.price || chicken.min_price,
+      originalPrice: chicken.price || chicken.min_price,
+      image: chicken.image.mobile_detail,
     };
   });
 
   return (
     <div className="min-h-screen bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex gap-4 mb-12 overflow-x-auto">
-        <div
-          className={`rounded-lg border px-4 py-1 hover:shadow-lg transition-shadow duration-300  cursor-pointer bg-white text-black ${
-            activeCategory === "All" ? "border-2 border-red-500" : "border-gray-300"
-          }`}
-          onClick={() => setActiveCategory("All")}
-        >
-          <h1>All</h1>
-        </div>
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className={`flex shrink-0 gap-2 rounded-lg border pl-2 pr-4 py-1 hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-white text-black ${
-              activeCategory === category.name ? "border-2 border-red-500" : "border-gray-300"
-            }`}
-            onClick={() => setActiveCategory(category.name)}
-          >
-            <Image
-              src={category.image}
-              alt={category.name}
-              width={25}
-              height={16}
-            />
-            <h1>{category.name}</h1>
-          </div>
-        ))}
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredDeals.map((deal) => (
-          <DealCard key={deal.id} deal={deal} />
+        {filteredItems.map((chicken) => (
+          <DealCard key={chicken.id} deal={chicken} />
         ))}
       </div>
     </div>
