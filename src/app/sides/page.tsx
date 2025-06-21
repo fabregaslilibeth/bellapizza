@@ -4,7 +4,7 @@ import { sides } from "@/data/sides";
 import SmallCard from "@/components/SmallCard";
 
 interface Side {
-  id: string;
+  id: number;
   name: string;
   price: number;
   image: {
@@ -12,7 +12,7 @@ interface Side {
   };
 }
 
-export default function PastaPage() {
+export default function SidesPage() {
   const items = sides.items.map((deal: Side) => {
     return {
       id: deal.id.toString(),

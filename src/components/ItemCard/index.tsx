@@ -57,26 +57,21 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
         <motion.img
           initial={{ scale: 1.2, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: .6, ease: [0.4, 0, 0.2, 1] }}
           src={item?.image}
           alt={item?.name}
-          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+          className="h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         {/* Overlaying polygon */}
-        <div
-          className="absolute -right-1 top-0 bottom-0 h-full w-full bg-gradient-to-l from-white/100 to-white/100"
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.4, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          className="absolute -right-8 top-0 bottom-0 h-full w-full bg-gradient-to-l from-white/100 to-white/100"
           style={{ clipPath: "polygon(88% 0, 100% 0, 100% 100%, 59% 100%)" }}
-        ></div>
-        {/* <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-md cursor-pointer"
-        >
-          Customise
-        </motion.div> */}
+        ></motion.div>
       </div>
 
       {/* Left side mobile Image with overlay */}
@@ -87,7 +82,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           src={item?.mobile_image}
           alt={item?.name}
-          className="h-full object-contain"
+          className="w-full h-full object-cover"
         />
       </div>
 
