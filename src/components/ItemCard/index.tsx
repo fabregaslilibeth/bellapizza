@@ -7,30 +7,31 @@ interface Variation {
   price: number;
 }
 
-interface Deal {
+interface Item {
   id: string;
   name: string;
   description: string;
   price: number;
   originalPrice: number;
   image: string;
+  mobile_image: string;
   category: string;
   variations: Variation[];
 }
 
-interface PizzaProps {
-  deal: Deal;
+interface ItemCardProps {
+  item: Item;
   index: number;
 }
 
-const Pizza: React.FC<PizzaProps> = ({ deal, index }) => {
+const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
   const [selectedVariation, setSelectedVariation] = useState<Variation>(
-    deal.variations?.[0]
+    item?.variations?.[0]
   );
 
   const handleVariationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = e.target.value;
-    const variation = deal.variations?.find((v) => {
+    const variation = item?.variations?.find((v) => {
       return +v.id === +selectedId;
     });
 
@@ -38,7 +39,7 @@ const Pizza: React.FC<PizzaProps> = ({ deal, index }) => {
       setSelectedVariation(variation);
     }
   };
-console.log(deal, 'selectedVariation');
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 0, scale: 0.95 }}
@@ -51,14 +52,14 @@ console.log(deal, 'selectedVariation');
       }}
       className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex h-72 border border-gray-100"
     >
-      {/* Left side - Image with overlay */}
-      <div className="relative w-6/12 overflow-hidden group">
+      {/* Left side desktop Image with overlay */}
+      <div className="hidden sm:block relative w-6/12 overflow-hidden group">
         <motion.img
           initial={{ scale: 1.2, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          src={deal.image}
-          alt={deal.name}
+          src={item?.image}
+          alt={item?.name}
           className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
         />
         {/* Gradient overlay */}
@@ -78,29 +79,41 @@ console.log(deal, 'selectedVariation');
         </motion.div> */}
       </div>
 
+      {/* Left side mobile Image with overlay */}
+      <div className="sm:hidden relative w-4/12 overflow-hidden group">
+        <motion.img
+          initial={{ scale: 1.2, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          src={item?.mobile_image}
+          alt={item?.name}
+          className="h-full object-contain"
+        />
+      </div>
+
       {/* Right side - Content */}
       <motion.div
         initial={{ x: 20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="flex-1 py-6 px-4 flex flex-col justify-between w-6/12"
+        className="flex-1 py-6 px-4 flex flex-col justify-between w-7/12 sm:w-6/12"
       >
         <div>
-          <h3 className="text-2xl font-bold text-gray-900 mt-2">{deal.name}</h3>
+          <h3 className="text-lg font-bold text-gray-900 mt-2">{item?.name}</h3>
           <p className="text-gray-600 mt-2 line-clamp-2 text-sm leading-relaxed">
-            {deal.description}
+            {item?.description}
           </p>
         </div>
 
         <div className="mt-4 space-y-3">
-          {deal.variations && deal.variations.length > 0 && (
+          {item?.variations && item?.variations.length > 0 && (
           <select
             className="form-select block w-full pl-3 pr-10 py-2.5 text-base border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-lg bg-green-50 hover:bg-green-100 transition-colors duration-200"
             aria-label="Select size"
             onChange={handleVariationChange}
             defaultValue={selectedVariation?.id}
           >
-            {deal.variations?.map((variation) => (
+            {item?.variations?.map((variation) => (
               <option key={variation?.id} value={variation?.id}>
                 {variation?.short_name}
               </option>
@@ -110,9 +123,9 @@ console.log(deal, 'selectedVariation');
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-3 rounded-lg font-medium hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white p-2 rounded-lg text-sm hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer" 
           >
-            Add to Cart - ₱{selectedVariation?.price || deal.originalPrice}
+            Add to Cart - ₱{selectedVariation?.price || item?.originalPrice}
           </motion.button>
         </div>
       </motion.div>
@@ -120,4 +133,4 @@ console.log(deal, 'selectedVariation');
   );
 };
 
-export default Pizza;
+export default ItemCard;

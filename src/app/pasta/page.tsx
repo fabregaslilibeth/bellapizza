@@ -1,6 +1,6 @@
 "use client";
 
-import Pizza from "@/components/Pizza";
+import ItemCard from "@/components/ItemCard";
 import { pasta } from "@/data/pasta";
 import Image from "next/image";
 import { useState } from "react";
@@ -82,8 +82,8 @@ export default function PastaPage() {
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredDeals.map((deal) => (
-          <Pizza key={deal.id} deal={deal} />
+        {filteredDeals.map((deal, index) => (
+          <ItemCard key={deal.id} item={deal} index={index} />
         ))}
       </div>
     </div>

@@ -2,34 +2,26 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Pizza from "@/components/Pizza";
 import { wings } from "@/data/wings";
+import DealCard from "@/components/DealCard";
 
 interface Deal {
   id: number;
   name: string;
   name_en: string;
   marketing_description: string;
-  display_price: number;
+  price: number;
   originalPrice: number;
   menu_attributes: {
     name: string;
   }[];
   image: {
     desktop_detail: string;
-    mobile_detail: string;
-    desktop_thumbnail: string;
-    mobile_thumbnail: string;
   };
   price_without_tax: number;
-  first_layers: {
-    price_master: number;
-    short_name: string;
-    id: number;
-  }[];
 }
 
-export default function Wings() {
+export default function DealsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const categories = wings.info.map((category) => {
     return {
@@ -50,13 +42,12 @@ export default function Wings() {
       name: deal.name,
       name_en: deal.name_en,
       description: deal.marketing_description,
-      price: deal.display_price,
-      originalPrice: deal.price_without_tax,
+      price: deal.price || deal.min_price,
+      originalPrice: deal.originalPrice,
       image: deal.image.mobile_detail,
-      variations: deal.first_layers?.sort((a: any, b: any) => a.price_master - b.price_master),
     };
   });
-  console.log(filteredDeals);
+
   return (
     <div className="min-h-screen bg-gray-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex gap-4 mb-12 overflow-x-auto">
@@ -88,7 +79,7 @@ export default function Wings() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredDeals.map((deal) => (
-          <Pizza key={deal.id} deal={deal} />
+          <DealCard key={deal.id} deal={deal} />
         ))}
       </div>
     </div>
