@@ -3,10 +3,12 @@ import { Roboto_Flex, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { OrderPreferenceProvider } from "@/context/OrderPreferenceContext";
+import { CartProvider } from "@/context/CartContext";
 import ChangeAddress from "@/components/Locator/ChangeAddress";
 import Locator from "@/components/Locator";
 import NearestStores from "@/components/Locator/NearestStores";
 import OrderPreferenceDisplay from "@/components/OrderPreferenceDisplay";
+import CartDisplay from "@/components/CartDisplay";
 
 const roboto = Roboto_Flex({
   variable: "--font-roboto",
@@ -34,12 +36,15 @@ export default function RootLayout({
         className={`${nunito.variable} ${roboto.variable} antialiased relative min-h-screen overflow-visible`}
       >
         <OrderPreferenceProvider>
-        <OrderPreferenceDisplay />
-          <Navbar />
-          <Locator />
-          <ChangeAddress />
-          <NearestStores />
-          {children}
+          <CartProvider>
+            <OrderPreferenceDisplay />
+            <Navbar />
+            <Locator />
+            <ChangeAddress />
+            <NearestStores />
+            <CartDisplay />
+            {children}
+          </CartProvider>
         </OrderPreferenceProvider>
       </body>
     </html>
