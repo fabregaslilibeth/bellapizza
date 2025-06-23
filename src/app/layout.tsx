@@ -34,7 +34,7 @@ export default function RootLayout({
         className={`${nunito.variable} ${roboto.variable} antialiased relative min-h-screen overflow-visible`}
       >
         <OrderPreferenceProvider>
-        <OrderPreferenceDisplay />
+          <OrderPreferenceDisplay />
           <Navbar />
           <Locator />
           <ChangeAddress />
