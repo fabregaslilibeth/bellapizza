@@ -3,25 +3,24 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-// import { 
-//   GiPizzaSlice, 
-//   GiNoodles, 
-//   GiChickenWing, 
-//   GiSandwich, 
-//   GiFrenchFries, 
-//   GiSodaCan,
-//   GiPriceTag
-// } from "react-icons/gi";
-import { FaPizzaSlice, FaNoodles, FaChickenWing, FaSandwich, FaFrenchFries, FaSodaCan, FaPriceTag } from "react-icons/fa";
+import { 
+  GiPizzaSlice, 
+  GiNoodles, 
+  GiChicken, 
+  GiSandwich, 
+  GiFrenchFries, 
+  GiSodaCan,
+  GiPriceTag
+} from "react-icons/gi";
 
 const navItems = [
-  { name: "Deals", href: "/deals", icon: FaPriceTag },
-  { name: "Pizza", href: "/pizza", icon: FaPizzaSlice },
-  { name: "Pasta", href: "/pasta", icon: FaNoodles },
-  { name: "Wings", href: "/wings", icon: FaChickenWing },
-  { name: "Melts", href: "/melts", icon: FaSandwich },
-  { name: "Sides", href: "/sides", icon: FaFrenchFries },
-  { name: "Drinks", href: "/drinks", icon: FaSodaCan },
+  { name: "Deals", href: "/deals", icon: GiPriceTag },
+  { name: "Pizza", href: "/pizza", icon: GiPizzaSlice },
+  { name: "Pasta", href: "/pasta", icon: GiNoodles },
+  { name: "Wings", href: "/wings", icon: GiChicken },
+  { name: "Melts", href: "/melts", icon: GiSandwich },
+  { name: "Sides", href: "/sides", icon: GiFrenchFries },
+  { name: "Drinks", href: "/drinks", icon: GiSodaCan },
 ];
 
 export default function Navbar() {
@@ -56,7 +55,6 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-row items-center space-x-8">
             {navItems.map((item, index) => {
-              const IconComponent = item.icon;
               return (
                 <motion.div
                   key={item.name}
@@ -80,7 +78,6 @@ export default function Navbar() {
                           : ""
                       }`}
                     >
-                      <IconComponent className="w-5 h-5" />
                       {item.name}
                     </Link>
                   </motion.div>
@@ -218,33 +215,37 @@ export default function Navbar() {
                 {/* Menu Items */}
                 <div className="flex-1 p-6">
                   <div className="space-y-2">
-                    {navItems.map((item, index) => (
-                      <motion.div
-                        key={item.name}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: index * 0.1,
-                          duration: 0.3,
-                          ease: "easeOut"
-                        }}
-                      >
-                        <Link
-                          href={item.href}
-                          onClick={() => {
-                            setActiveIndex(index);
-                            closeMenu();
+                    {navItems.map((item, index) => {
+                      const IconComponent = item.icon;
+                      return (
+                        <motion.div
+                          key={item.name}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ 
+                            delay: index * 0.1,
+                            duration: 0.3,
+                            ease: "easeOut"
                           }}
-                          className={`block text-lg py-3 px-4 rounded-lg transition-all duration-300 ${
-                            activeIndex === index
-                              ? 'font-["Playfair_Display"] italic font-extrabold uppercase text-red-600 bg-red-50'
-                              : "hover:bg-gray-50 hover:text-black/80"
-                          }`}
                         >
-                          {item.name}
-                        </Link>
-                      </motion.div>
-                    ))}
+                          <Link
+                            href={item.href}
+                            onClick={() => {
+                              setActiveIndex(index);
+                              closeMenu();
+                            }}
+                            className={`block text-lg py-3 px-4 rounded-lg transition-all duration-300 flex items-center gap-2 ${
+                              activeIndex === index
+                                ? 'font-["Playfair_Display"] italic font-extrabold uppercase text-red-600 bg-red-50'
+                                : "hover:bg-gray-50 hover:text-black/80"
+                            }`}
+                          >
+                            <IconComponent className="w-5 h-5 text-red-600" />
+                            {item.name}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
 
