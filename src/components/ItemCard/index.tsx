@@ -50,7 +50,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
         delay: index * 0.1,
         ease: [0.4, 0, 0.2, 1],
       }}
-      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex h-72 border border-gray-100"
+      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row sm:h-72 border border-gray-100"
     >
       {/* Left side desktop Image with overlay */}
       <div className="hidden sm:block relative w-6/12 overflow-hidden group">
@@ -75,7 +75,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
       </div>
 
       {/* Left side mobile Image with overlay */}
-      <div className="sm:hidden relative w-4/12 overflow-hidden group">
+      <div className="sm:hidden relative w-full h-48 overflow-hidden group">
         <motion.img
           initial={{ scale: 1.2, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -91,7 +91,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, index }) => {
         initial={{ x: 20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="flex-1 py-6 px-4 flex flex-col justify-between w-7/12 sm:w-6/12"
+        className="flex-1 py-6 px-4 flex flex-col justify-between w-full sm:w-6/12"
       >
         <div>
           <h3 className="text-lg font-bold text-gray-900 mt-2">{item?.name}</h3>

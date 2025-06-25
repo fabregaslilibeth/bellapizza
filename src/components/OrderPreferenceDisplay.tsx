@@ -62,10 +62,10 @@ export default function OrderPreferenceDisplay() {
   };
 
   return (
-    <div className="fixed bottom-20 right-0 w-96 z-50 h-16">
+    <div className="fixed bottom-20 right-1 md:right-0 w-96 z-50 h-16">
       <div className="mt-4">
         <motion.div 
-          className="px-4 py-2 w-full lg:w-1/2 lg:w-84 flex items-center gap-4 border border-black rounded-md bg-green-50"
+          className="px-4 py-2 w-11/12 lg:w-1/2 lg:w-84 mx-auto flex items-center gap-4 border border-black rounded-md bg-green-50"
           whileHover={{ scale: 1.02, boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
           whileTap={{ scale: 0.98 }}
         >

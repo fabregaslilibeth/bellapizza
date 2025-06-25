@@ -23,6 +23,8 @@ interface CartContextType {
   getCartItemCount: () => number;
   getCartTotal: () => number;
   isLoggedIn: boolean;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -89,6 +91,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const cartId = getCartId();
 
   // Check authentication status and listen to changes
@@ -208,10 +211,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (isLoggedIn) {
       // Update Firestore for logged-in users
       await updateDoc(doc(db, 'carts', cartId), {
-        items: newItems.map(item => ({
-          ...item,
-          addedAt: serverTimestamp()
-        })),
+        items: newItems,
         total: newTotal,
         itemCount: newItemCount,
         updatedAt: serverTimestamp()
@@ -242,10 +242,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (isLoggedIn) {
       // Update Firestore for logged-in users
       await updateDoc(doc(db, 'carts', cartId), {
-        items: newItems.map(item => ({
-          ...item,
-          addedAt: serverTimestamp()
-        })),
+        items: newItems,
         total: newTotal,
         itemCount: newItemCount,
         updatedAt: serverTimestamp()
@@ -278,10 +275,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (isLoggedIn) {
       // Update Firestore for logged-in users
       await updateDoc(doc(db, 'carts', cartId), {
-        items: newItems.map(item => ({
-          ...item,
-          addedAt: serverTimestamp()
-        })),
+        items: newItems,
         total: newTotal,
         itemCount: newItemCount,
         updatedAt: serverTimestamp()
@@ -337,7 +331,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       clearCart,
       getCartItemCount,
       getCartTotal,
-      isLoggedIn
+      isLoggedIn,
+      isCartOpen,
+      setIsCartOpen
     }}>
       {children}
     </CartContext.Provider>

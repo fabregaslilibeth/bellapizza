@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
 import { CartItem } from '@/types';
 
 const CartDisplay: React.FC = () => {
-  const { cart, loading, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
+  const { cart, loading, removeFromCart, updateQuantity, clearCart, getCartTotal, isCartOpen, setIsCartOpen } = useCart();
 
   if (loading) {
     return null;
@@ -23,44 +22,9 @@ const CartDisplay: React.FC = () => {
 
   return (
     <>
-      {/* Cart Toggle Button - Always visible */}
-      <motion.button
-        className="fixed top-4 right-4 z-50 bg-white rounded-lg shadow-lg p-3 hover:shadow-xl transition-shadow"
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <div className="relative">
-          <svg 
-            className="w-6 h-6 text-gray-700" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
-            />
-          </svg>
-          
-          {cart && cart.itemCount > 0 && (
-            <motion.div
-              className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            >
-              {cart.itemCount > 99 ? '99+' : cart.itemCount}
-            </motion.div>
-          )}
-        </div>
-      </motion.button>
-
       {/* Cart Panel */}
       <AnimatePresence>
-        {isOpen && (
+        {isCartOpen && (
           <motion.div
             className="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-40 overflow-hidden"
             initial={{ x: '100%' }}
@@ -73,7 +37,7 @@ const CartDisplay: React.FC = () => {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Your Cart</h2>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsCartOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,13 +167,13 @@ const CartDisplay: React.FC = () => {
 
       {/* Backdrop */}
       <AnimatePresence>
-        {isOpen && (
+        {isCartOpen && (
           <motion.div
             className="fixed inset-0 bg-black/60 z-30"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsCartOpen(false)}
           />
         )}
       </AnimatePresence>
