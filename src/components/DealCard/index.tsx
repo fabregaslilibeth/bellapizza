@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, Variants } from 'framer-motion';
+import { useCart } from '@/context/CartContext';
 
 interface ProcessedDeal {
   id: string;
@@ -18,6 +19,8 @@ interface DealProps {
 const DealCard: React.FC<DealProps> = ({ deal }) => {
   const [isDiscounted, setIsDiscounted] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (deal.originalPrice && deal.price) {
@@ -29,6 +32,25 @@ const DealCard: React.FC<DealProps> = ({ deal }) => {
       setDiscountPercentage(discount);
     }
   }, [deal]);
+
+  const handleAddToCart = async () => {
+    setIsAddingToCart(true);
+    try {
+      await addToCart({
+        id: deal.id,
+        name: deal.name,
+        description: deal.description,
+        price: deal.price,
+        originalPrice: deal.originalPrice,
+        image: deal.image,
+        category: deal.category
+      });
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -247,18 +269,24 @@ const DealCard: React.FC<DealProps> = ({ deal }) => {
           </motion.div>
           
           <motion.button 
-            className="bg-green-500 text-white px-3 py-1 rounded-lg transition-all duration-300 cursor-pointer"
+            className={`px-3 py-1 rounded-lg transition-all duration-300 cursor-pointer ${
+              isAddingToCart 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-green-500 hover:bg-green-600'
+            } text-white`}
             variants={buttonVariants}
             initial="hidden"
             animate="visible"
-            whileHover="hover"
-            whileTap="tap"
+            whileHover={!isAddingToCart ? "hover" : undefined}
+            whileTap={!isAddingToCart ? "tap" : undefined}
+            onClick={handleAddToCart}
+            disabled={isAddingToCart}
           >
             <motion.span
-              whileHover={{ x: 1 }}
+              whileHover={!isAddingToCart ? { x: 1 } : undefined}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              View Deal
+              {isAddingToCart ? 'Adding...' : 'Add to Cart'}
             </motion.span>
           </motion.button>
         </div>

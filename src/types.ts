@@ -43,3 +43,25 @@ export interface Address {
   export interface Places {
     [key: string]: Region;
   }
+
+  // Cart related types
+  export interface CartItem {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    originalPrice: number;
+    image: string;
+    category?: string;
+    quantity: number;
+    addedAt: Date;
+  }
+
+  export interface Cart {
+    id: string;
+    items: CartItem[];
+    total: number;
+    itemCount: number;
+    createdAt: Date;
+    updatedAt: Date;
+  }

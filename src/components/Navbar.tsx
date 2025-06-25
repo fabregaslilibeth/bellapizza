@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useCart } from "@/context/CartContext";
 import { 
   GiPizzaSlice, 
   GiNoodles, 
@@ -27,6 +28,8 @@ export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { getCartItemCount, isCartOpen, setIsCartOpen } = useCart();
+  const itemCount = getCartItemCount();
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -137,8 +140,76 @@ export default function Navbar() {
             })}
           </div>
 
+          {/* Cart Icon */}
+          <div className="hidden md:flex items-center">
+            <motion.div 
+              className="relative cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCartOpen(!isCartOpen)}
+            >
+              <svg 
+                className="w-6 h-6 text-gray-700" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
+                />
+              </svg>
+              
+              {itemCount > 0 && (
+                <motion.div
+                  className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  {itemCount > 99 ? '99+' : itemCount}
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+
           {/* Mobile Burger Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-4">
+            {/* Mobile Cart Icon */}
+            <motion.div 
+              className="relative cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCartOpen(!isCartOpen)}
+            >
+              <svg 
+                className="w-6 h-6 text-gray-700" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
+                />
+              </svg>
+              
+              {itemCount > 0 && (
+                <motion.div
+                  className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                >
+                  {itemCount > 99 ? '99+' : itemCount}
+                </motion.div>
+              )}
+            </motion.div>
+
             <button
               onClick={toggleMenu}
               className="flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
