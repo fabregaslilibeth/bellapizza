@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useCart } from "../../context/CartContext";
 
 interface SmallCardItem {
   id: string;
@@ -13,6 +14,26 @@ interface SmallCardProps {
 }
 
 const SmallCard: React.FC<SmallCardProps> = ({ item, index }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = async () => {
+    try {
+      const itemToAdd = {
+        id: item.id,
+        name: item.name,
+        description: item.name, // Using name as description since SmallCard doesn't have description
+        price: item.price,
+        originalPrice: item.price, // Using same price as original since no discount info
+        image: item.image,
+        category: undefined // SmallCard doesn't have category info
+      };
+      
+      await addToCart(itemToAdd);
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 0, scale: 0.95 }}
@@ -49,6 +70,7 @@ const SmallCard: React.FC<SmallCardProps> = ({ item, index }) => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={handleAddToCart}
             className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white p-2 rounded-lg text-sm hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer" 
           >
             Add to Cart - ₱{item.price}
