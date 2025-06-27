@@ -23,6 +23,7 @@ interface CartContextType {
   getCartItemCount: () => number;
   getCartTotal: () => number;
   isLoggedIn: boolean;
+  authLoading: boolean;
   isCartOpen: boolean;
   setIsCartOpen: (isOpen: boolean) => void;
 }
@@ -91,24 +92,37 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const cartId = getCartId();
+
+  // Set client flag to prevent hydration issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Check authentication status and listen to changes
   useEffect(() => {
+    if (!isClient) return; // Don't run auth checks during SSR
+
     const authStatus = checkAuthStatus();
     setIsLoggedIn(authStatus);
+    setAuthLoading(false);
 
     // Listen to authentication state changes
     const unsubscribe = onAuthStateChange((user) => {
       setIsLoggedIn(!!user);
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isClient]);
 
   // Listen to cart changes in Firestore (only if logged in)
   useEffect(() => {
+    if (!isClient) return; // Don't run cart logic during SSR
+
     if (!isLoggedIn) {
       // Load cart from localStorage for non-logged-in users
       const localCart = getLocalStorageCart();
@@ -172,7 +186,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
 
     return () => unsubscribe();
-  }, [cartId, isLoggedIn]);
+  }, [cartId, isLoggedIn, isClient]);
 
   const addToCart = async (item: Omit<CartItem, 'quantity' | 'addedAt'>) => {
     if (!cart) return;
@@ -332,6 +346,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       getCartItemCount,
       getCartTotal,
       isLoggedIn,
+      authLoading,
       isCartOpen,
       setIsCartOpen
     }}>

@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
+import EmailLoginButton from "./EmailLoginButton";
+import ProfileIcon from "./ProfileIcon";
 import { 
   GiPizzaSlice, 
   GiNoodles, 
@@ -11,7 +13,8 @@ import {
   GiSandwich, 
   GiFrenchFries, 
   GiSodaCan,
-  GiPriceTag
+  GiPriceTag,
+  GiShoppingCart
 } from "react-icons/gi";
 
 const navItems = [
@@ -28,8 +31,16 @@ export default function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { getCartItemCount, isCartOpen, setIsCartOpen } = useCart();
+  const [isClient, setIsClient] = useState(false);
+  const { getCartItemCount, isCartOpen, setIsCartOpen, isLoggedIn, authLoading } = useCart();
   const itemCount = getCartItemCount();
+
+  // Show login button if not logged in and auth is not loading
+  const shouldShowLoginButton = !isLoggedIn && !authLoading;
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -141,26 +152,29 @@ export default function Navbar() {
           </div>
 
           {/* Cart Icon */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-4">
+            {isClient && (
+              shouldShowLoginButton ? (
+                <div className="flex gap-2">
+                  <EmailLoginButton 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-sm"
+                  >
+                    Login
+                  </EmailLoginButton>
+                </div>
+              ) : (
+                <ProfileIcon size="md" />
+              )
+            )}
             <motion.div 
               className="relative cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsCartOpen(!isCartOpen)}
             >
-              <svg 
-                className="w-6 h-6 text-gray-700" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
-                />
-              </svg>
+              <GiShoppingCart className="w-6 h-6 text-gray-700" />
               
               {itemCount > 0 && (
                 <motion.div
@@ -177,6 +191,22 @@ export default function Navbar() {
 
           {/* Mobile Burger Menu Button */}
           <div className="md:hidden flex items-center gap-4">
+            {isClient && (
+              shouldShowLoginButton ? (
+                <div className="flex gap-2">
+                  <EmailLoginButton 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-sm"
+                  >
+                    Login
+                  </EmailLoginButton>
+                </div>
+              ) : (
+                <ProfileIcon size="sm" />
+              )
+            )}
+            
             {/* Mobile Cart Icon */}
             <motion.div 
               className="relative cursor-pointer"
@@ -184,19 +214,7 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsCartOpen(!isCartOpen)}
             >
-              <svg 
-                className="w-6 h-6 text-gray-700" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" 
-                />
-              </svg>
+              <GiShoppingCart className="w-6 h-6 text-gray-700" />
               
               {itemCount > 0 && (
                 <motion.div
