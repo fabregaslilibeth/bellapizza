@@ -1,16 +1,27 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
 import { CartItem } from '@/types';
+import LoginButton from './LoginButton';
+import EmailLoginButton from './EmailLoginButton';
+import ProfileIcon from './ProfileIcon';
 
 const CartDisplay: React.FC = () => {
-  const { cart, loading, removeFromCart, updateQuantity, clearCart, getCartTotal, isCartOpen, setIsCartOpen } = useCart();
+  const { cart, loading, removeFromCart, updateQuantity, clearCart, getCartTotal, isCartOpen, setIsCartOpen, isLoggedIn, authLoading } = useCart();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   if (loading) {
     return null;
   }
+
+  // Show login buttons if not logged in and auth is not loading
+  const shouldShowLoginButtons = !isLoggedIn && !authLoading;
 
   const handleQuantityChange = async (item: CartItem, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -48,6 +59,40 @@ const CartDisplay: React.FC = () => {
               <p className="text-sm text-gray-600 mt-1">
                 {cart ? `${cart.itemCount} items` : '0 items'}
               </p>
+              {isClient && (
+                shouldShowLoginButtons ? (
+                  <div className="mt-2 p-2 bg-blue-50 rounded-lg">
+                    <p className="text-xs text-blue-700 mb-2">
+                      Sign in to save your cart across devices
+                    </p>
+                    <div className="space-y-2">
+                      <LoginButton 
+                        variant="default" 
+                        size="sm" 
+                        className="w-full text-xs"
+                      >
+                        Sign In with Google
+                      </LoginButton>
+                      <EmailLoginButton 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full text-xs"
+                      >
+                        Sign In with Email
+                      </EmailLoginButton>
+                    </div>
+                  </div>
+                ) : isLoggedIn && (
+                  <div className="mt-2 p-2 bg-green-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-green-700">
+                        Cart saved to your account
+                      </p>
+                      <ProfileIcon size="sm" />
+                    </div>
+                  </div>
+                )
+              )}
             </div>
 
             {/* Cart Items */}
@@ -68,7 +113,25 @@ const CartDisplay: React.FC = () => {
                     />
                   </svg>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Your cart is empty</h3>
-                  <p className="text-gray-500">Add some delicious items to get started!</p>
+                  <p className="text-gray-500 mb-4">Add some delicious items to get started!</p>
+                  {isClient && shouldShowLoginButtons && (
+                    <div className="w-full space-y-2">
+                      <LoginButton 
+                        variant="outline" 
+                        size="md" 
+                        className="w-full"
+                      >
+                        Sign In with Google
+                      </LoginButton>
+                      <EmailLoginButton 
+                        variant="outline" 
+                        size="md" 
+                        className="w-full"
+                      >
+                        Sign In with Email
+                      </EmailLoginButton>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <AnimatePresence>
@@ -159,6 +222,24 @@ const CartDisplay: React.FC = () => {
                 >
                   Checkout
                 </button>
+                {isClient && shouldShowLoginButtons && cart && cart.items.length > 0 && (
+                  <div className="pt-2 border-t space-y-2">
+                    <LoginButton 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                    >
+                      Sign In with Google
+                    </LoginButton>
+                    <EmailLoginButton 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                    >
+                      Sign In with Email
+                    </EmailLoginButton>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
