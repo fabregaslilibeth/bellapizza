@@ -59,7 +59,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white relative z-50">
+    <nav className="bg-white relative">
       <div className="h-24 max-w-[1450px] mx-auto px-8 pb-6 overflow-x-hidden">
         <div className="flex items-center justify-between gap-4 h-full">
           <Link href="/" className="text-2xl font-bold shrink-0">

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { OrderPreferenceProvider } from "@/context/OrderPreferenceContext";
 import { CartProvider } from "@/context/CartContext";
+import { CheckoutProvider } from "@/context/CheckoutContext";
 import ChangeAddress from "@/components/Locator/ChangeAddress";
 import Locator from "@/components/Locator";
 import NearestStores from "@/components/Locator/NearestStores";
@@ -37,13 +38,15 @@ export default function RootLayout({
       >
         <OrderPreferenceProvider>
           <CartProvider>
-            <OrderPreferenceDisplay />
-            <Navbar />
-            <Locator />
-            <ChangeAddress />
-            <NearestStores />
-            <CartDisplay />
-            {children}
+            <CheckoutProvider>
+              <OrderPreferenceDisplay />
+              <Navbar />
+              <Locator />
+              <ChangeAddress />
+              <NearestStores />
+              <CartDisplay />
+              {children}
+            </CheckoutProvider>
           </CartProvider>
         </OrderPreferenceProvider>
       </body>
