@@ -14,7 +14,6 @@ const CheckoutModal: React.FC = () => {
     isCheckoutOpen, 
     setIsCheckoutOpen, 
     currentStep, 
-    orderData,
     setOrderData,
     calculateSubtotal,
     calculateDeliveryFee,
@@ -54,8 +53,6 @@ const CheckoutModal: React.FC = () => {
         return <AddressStep />;
       case 2:
         return <ConfirmStep />;
-      default:
-        return <PaymentStep />;
     }
   };
 

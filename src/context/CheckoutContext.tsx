@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import { CheckoutStep, PaymentMethod, DeliveryAddress, Order, CartItem } from '@/types';
 import { createOrder, storeGuestPreferences, getGuestPreferences } from '@/lib/orders';
 import { getCurrentUser } from '@/lib/auth';
@@ -34,6 +34,7 @@ interface CheckoutContextType {
   selectedPaymentMethod: PaymentMethod | null;
   setSelectedPaymentMethod: (method: PaymentMethod | null) => void;
   addPaymentMethod: (method: PaymentMethod) => void;
+  setPaymentMethods: (methods: PaymentMethod[]) => void;
   
   // Delivery addresses
   deliveryAddresses: DeliveryAddress[];
@@ -187,13 +188,24 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
 
   // Save payment methods to localStorage
   useEffect(() => {
-    saveToLocalStorage('paymentMethods', paymentMethods);
+    console.log(paymentMethods.length, 'saving to local storage');
+    if (paymentMethods.length > 0) {
+      saveToLocalStorage('paymentMethods', paymentMethods); 
+    }
   }, [paymentMethods]);
 
   // Save delivery addresses to localStorage
   useEffect(() => {
     saveToLocalStorage('deliveryAddresses', deliveryAddresses);
   }, [deliveryAddresses]);
+
+  // Auto-select default payment method when payment methods are loaded
+  useEffect(() => {
+    const defaultPaymentMethod = paymentMethods.find(method => method.default);
+    if (defaultPaymentMethod && !selectedPaymentMethod) {
+      setSelectedPaymentMethod(defaultPaymentMethod);
+    }
+  }, [paymentMethods, selectedPaymentMethod]);
 
   const completeStep = (stepId: CheckoutStep['id']) => {
     setSteps(prev => prev.map(step => 
@@ -214,9 +226,11 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
   };
 
   const canProceedToNextStep = (): boolean => {
+    console.log(currentStep, 'current step');
     switch (currentStep) {
       case 0: // Payment step
-        return selectedPaymentMethod !== null && 
+        const hasDefaultPaymentMethod = paymentMethods.some(method => method.default);
+        return hasDefaultPaymentMethod && 
                (isGuestCheckout ? 
                  Boolean(guestInfo.email && guestInfo.firstName && guestInfo.lastName && guestInfo.phone) : 
                  true);
@@ -242,28 +256,28 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const calculateSubtotal = (items: CartItem[]): number => {
+  const calculateSubtotal = useCallback((items: CartItem[]): number => {
     // Calculate the VAT-inclusive total from items
     const vatInclusiveTotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
     // Convert to base price (without VAT)
     return vatInclusiveTotal / 1.12;
-  };
+  }, []);
 
-  const calculateDeliveryFee = (): number => {
+  const calculateDeliveryFee = useCallback((): number => {
     // Simple delivery fee calculation
     return 50; // Fixed delivery fee
-  };
+  }, []);
 
-  const calculateTax = (subtotal: number): number => {
+  const calculateTax = useCallback((subtotal: number): number => {
     // Calculate 12% VAT on the base price
     return subtotal * 0.12;
-  };
+  }, []);
 
-  const calculateTotal = (subtotal: number, deliveryFee: number): number => {
+  const calculateTotal = useCallback((subtotal: number, deliveryFee: number): number => {
     // Total is base price + VAT + delivery fee
     const tax = calculateTax(subtotal);
     return subtotal + tax + deliveryFee;
-  };
+  }, [calculateTax]);
 
   const placeOrder = async (): Promise<Order> => {
     // Simulate API call
@@ -353,6 +367,7 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
       calculateDeliveryFee,
       calculateTax,
       calculateTotal,
+      setPaymentMethods,
     }}>
       {children}
     </CheckoutContext.Provider>

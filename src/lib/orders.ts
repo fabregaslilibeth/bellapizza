@@ -50,26 +50,6 @@ export interface FirestoreUser {
   updatedAt?: Timestamp;
 }
 
-// Convert Order to Firestore format
-const convertOrderToFirestore = (order: Order, userId?: string): FirestoreOrder => {
-  return {
-    userId: userId || undefined,
-    guestEmail: !userId ? order.guestEmail : undefined,
-    guestInfo: !userId ? order.guestInfo : undefined,
-    items: order.items,
-    total: order.total,
-    subtotal: order.subtotal,
-    deliveryFee: order.deliveryFee,
-    tax: order.tax,
-    paymentMethod: order.paymentMethod,
-    deliveryAddress: order.deliveryAddress,
-    status: order.status,
-    estimatedTime: order.estimatedTime,
-    createdAt: Timestamp.fromDate(order.createdAt),
-    updatedAt: Timestamp.fromDate(order.updatedAt),
-  };
-};
-
 // Convert Firestore document to Order
 const convertFirestoreToOrder = (doc: QueryDocumentSnapshot<DocumentData>): Order => {
   const data = doc.data() as FirestoreOrder;

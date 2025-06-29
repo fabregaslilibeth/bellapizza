@@ -80,7 +80,7 @@ const AddressStep: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                selectedDeliveryAddress?.id === address.id
+                selectedDeliveryAddress?.id === address?.id
                   ? 'border-blue-500 bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
@@ -90,25 +90,25 @@ const AddressStep: React.FC = () => {
                 <div className="text-2xl">📍</div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
-                    <p className="font-medium text-gray-900">{address.name}</p>
-                    {address.isDefault && (
+                    <p className="font-medium text-gray-900">{address?.name}</p>
+                    {address?.isDefault && (
                       <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
                         Default
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600">{address.address}</p>
+                  <p className="text-sm text-gray-600">{address?.address}</p>
                   <p className="text-sm text-gray-600">
-                    {address.city}, {address.province} {address.zipCode}
+                    {address?.city}, {address?.province} {address?.zipCode}
                   </p>
-                  <p className="text-sm text-gray-600">{address.phone}</p>
-                  {address.instructions && (
+                  <p className="text-sm text-gray-600">{address?.phone}</p>
+                  {address?.instructions && (
                     <p className="text-sm text-gray-500 mt-1">
-                      <span className="font-medium">Instructions:</span> {address.instructions}
+                      <span className="font-medium">Instructions:</span> {address?.instructions}
                     </p>
                   )}
                 </div>
-                {selectedDeliveryAddress?.id === address.id && (
+                {selectedDeliveryAddress?.id === address?.id && (
                   <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

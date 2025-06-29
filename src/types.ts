@@ -75,7 +75,7 @@ export interface Address {
     expiryDate?: string;
     cvv?: string;
     phoneNumber?: string; // For mobile payments
-    isDefault?: boolean;
+    default: boolean;
   }
 
   export interface DeliveryAddress {
