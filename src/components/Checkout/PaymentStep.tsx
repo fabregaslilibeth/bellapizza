@@ -8,14 +8,13 @@ import { PaymentMethod } from '@/types';
 const PaymentStep: React.FC = () => {
   const { 
     paymentMethods, 
-    selectedPaymentMethod, 
     setSelectedPaymentMethod,
+    setPaymentMethods,
     proceedToNextStep,
     canProceedToNextStep,
     isGuestCheckout,
     guestInfo,
-    setGuestInfo,
-    addPaymentMethod
+    setGuestInfo
   } = useCheckout();
 
   const [showAddCard, setShowAddCard] = useState(false);
@@ -35,8 +34,37 @@ const PaymentStep: React.FC = () => {
     }
   }, [isGuestCheckout, guestInfo.email, paymentMethods.length]);
 
-  const handlePaymentMethodSelect = (method: PaymentMethod) => {
-    setSelectedPaymentMethod(method);
+  const handlePaymentMethodSelect = (paymentType: 'cash' | 'gcash' | 'paymaya' | 'card') => {
+    // Create a new payment method object
+    const newPaymentMethod: PaymentMethod = {
+      id: paymentType,
+      type: paymentType,
+      default: true
+    };
+
+    // Set all existing payment methods to default: false and add/update the selected one
+    const updatedPaymentMethods = paymentMethods.map(method => ({
+      ...method,
+      default: method.type === paymentType ? true : false
+    }));
+
+    // Check if this payment type already exists
+    const existingMethodIndex = updatedPaymentMethods.findIndex(m => m.type === paymentType);
+    
+    if (existingMethodIndex >= 0) {
+      // Update existing method to be default
+      updatedPaymentMethods[existingMethodIndex] = {
+        ...updatedPaymentMethods[existingMethodIndex],
+        default: true
+      };
+    } else {
+      // Add new payment method as default
+      updatedPaymentMethods.push(newPaymentMethod);
+    }
+
+    // Update the payment methods array and set the selected method
+    setPaymentMethods(updatedPaymentMethods);
+    setSelectedPaymentMethod(newPaymentMethod);
   };
 
   const handleAddCard = () => {
@@ -48,10 +76,19 @@ const PaymentStep: React.FC = () => {
         cardHolder: newCard.cardHolder,
         expiryDate: newCard.expiryDate,
         cvv: newCard.cvv,
+        default: true
       };
       
-      // Add to payment methods
-      addPaymentMethod(cardMethod);
+      // Set all existing payment methods to default: false and add the new card
+      const updatedPaymentMethods = paymentMethods.map(method => ({
+        ...method,
+        default: false
+      }));
+      
+      updatedPaymentMethods.push(cardMethod);
+      
+      // Update the payment methods array and set the selected method
+      setPaymentMethods(updatedPaymentMethods);
       setSelectedPaymentMethod(cardMethod);
       setShowAddCard(false);
       setNewCard({ cardNumber: '', cardHolder: '', expiryDate: '', cvv: '' });
@@ -60,36 +97,6 @@ const PaymentStep: React.FC = () => {
 
   const handleGuestInfoChange = (field: keyof typeof guestInfo, value: string) => {
     setGuestInfo({ [field]: value });
-  };
-
-  const getPaymentIcon = (type: PaymentMethod['type']) => {
-    switch (type) {
-      case 'card':
-        return '💳';
-      case 'cash':
-        return '💰';
-      case 'gcash':
-        return '📱';
-      case 'paymaya':
-        return '📱';
-      default:
-        return '💳';
-    }
-  };
-
-  const getPaymentLabel = (type: PaymentMethod['type']) => {
-    switch (type) {
-      case 'card':
-        return 'Credit/Debit Card';
-      case 'cash':
-        return 'Cash on Delivery';
-      case 'gcash':
-        return 'GCash';
-      case 'paymaya':
-        return 'PayMaya';
-      default:
-        return 'Payment Method';
-    }
   };
 
   return (
@@ -160,69 +167,17 @@ const PaymentStep: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Payment Methods */}
-      <div className="space-y-3 mb-6">
-        {paymentMethods.length > 0 ? (
-          paymentMethods.map((method) => (
-            <motion.div
-              key={method.id}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-                selectedPaymentMethod?.id === method.id
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-              onClick={() => handlePaymentMethodSelect(method)}
-            >
-              <div className="flex items-center space-x-3">
-                <div className="text-2xl">{getPaymentIcon(method.type)}</div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">{getPaymentLabel(method.type)}</p>
-                  {method.type === 'card' && method.cardNumber && (
-                    <p className="text-sm text-gray-500">{method.cardNumber}</p>
-                  )}
-                  {method.type === 'gcash' && method.phoneNumber && (
-                    <p className="text-sm text-gray-500">{method.phoneNumber}</p>
-                  )}
-                  {method.type === 'paymaya' && method.phoneNumber && (
-                    <p className="text-sm text-gray-500">{method.phoneNumber}</p>
-                  )}
-                  {method.isDefault && (
-                    <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
-                      Default
-                    </span>
-                  )}
-                </div>
-                {selectedPaymentMethod?.id === method.id && (
-                  <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          ))
-        ) : (
-          <div className="text-center py-8 text-gray-500">
-            <p>No saved payment methods</p>
-            <p className="text-sm">Add a payment method to continue</p>
-          </div>
-        )}
-      </div>
-
       {/* Quick Payment Options */}
       <div className="space-y-3 mb-6">
         <motion.div
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-            selectedPaymentMethod?.type === 'cash'
+            paymentMethods.find(m => m.type === 'cash')?.default
               ? 'border-blue-500 bg-blue-50'
               : 'border-gray-200 hover:border-gray-300'
           }`}
-          onClick={() => handlePaymentMethodSelect({ id: 'cash', type: 'cash' })}
+          onClick={() => handlePaymentMethodSelect('cash')}
         >
           <div className="flex items-center space-x-3">
             <div className="text-2xl">💰</div>
@@ -230,7 +185,7 @@ const PaymentStep: React.FC = () => {
               <p className="font-medium text-gray-900">Cash on Delivery</p>
               <p className="text-sm text-gray-500">Pay when you receive your order</p>
             </div>
-            {selectedPaymentMethod?.type === 'cash' && (
+            {paymentMethods.find(m => m.type === 'cash')?.default && (
               <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -244,11 +199,11 @@ const PaymentStep: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-            selectedPaymentMethod?.type === 'gcash'
+            paymentMethods.find(m => m.type === 'gcash')?.default
               ? 'border-blue-500 bg-blue-50'
               : 'border-gray-200 hover:border-gray-300'
           }`}
-          onClick={() => handlePaymentMethodSelect({ id: 'gcash', type: 'gcash' })}
+          onClick={() => handlePaymentMethodSelect('gcash')}
         >
           <div className="flex items-center space-x-3">
             <div className="text-2xl">📱</div>
@@ -256,7 +211,7 @@ const PaymentStep: React.FC = () => {
               <p className="font-medium text-gray-900">GCash</p>
               <p className="text-sm text-gray-500">Pay using your GCash account</p>
             </div>
-            {selectedPaymentMethod?.type === 'gcash' && (
+            {paymentMethods.find(m => m.type === 'gcash')?.default && (
               <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -270,11 +225,11 @@ const PaymentStep: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border rounded-lg cursor-pointer transition-colors ${
-            selectedPaymentMethod?.type === 'paymaya'
+            paymentMethods.find(m => m.type === 'paymaya')?.default
               ? 'border-blue-500 bg-blue-50'
               : 'border-gray-200 hover:border-gray-300'
           }`}
-          onClick={() => handlePaymentMethodSelect({ id: 'paymaya', type: 'paymaya' })}
+          onClick={() => handlePaymentMethodSelect('paymaya')}
         >
           <div className="flex items-center space-x-3">
             <div className="text-2xl">📱</div>
@@ -282,7 +237,7 @@ const PaymentStep: React.FC = () => {
               <p className="font-medium text-gray-900">PayMaya</p>
               <p className="text-sm text-gray-500">Pay using your PayMaya account</p>
             </div>
-            {selectedPaymentMethod?.type === 'paymaya' && (
+            {paymentMethods.find(m => m.type === 'paymaya')?.default && (
               <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -291,10 +246,82 @@ const PaymentStep: React.FC = () => {
             )}
           </div>
         </motion.div>
+
+        {/* Saved Cards */}
+        {paymentMethods.filter(m => m.type === 'card').map((card) => (
+          <motion.div
+            key={card.id}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+              card.default
+                ? 'border-blue-500 bg-blue-50'
+                : 'border-gray-200 hover:border-gray-300'
+            }`}
+            onClick={() => {
+              // Set all payment methods to default: false
+              const updatedPaymentMethods = paymentMethods.map(method => ({
+                ...method,
+                default: false
+              }));
+              
+              // Find and update the selected card to default: true
+              const cardIndex = updatedPaymentMethods.findIndex(m => m.id === card.id);
+              if (cardIndex >= 0) {
+                updatedPaymentMethods[cardIndex] = {
+                  ...updatedPaymentMethods[cardIndex],
+                  default: true
+                };
+              }
+              
+              // Update payment methods and set selected method
+              setPaymentMethods(updatedPaymentMethods);
+              setSelectedPaymentMethod(card);
+            }}
+          >
+            <div className="flex items-center space-x-3">
+              <div className="text-2xl">💳</div>
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">Credit/Debit Card</p>
+                {card.cardNumber && (
+                  <p className="text-sm text-gray-500">•••• •••• •••• {card.cardNumber.slice(-4)}</p>
+                )}
+                {card.default && (
+                  <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+                    Default
+                  </span>
+                )}
+              </div>
+              {card.default && (
+                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        ))}
+
+        {/* Add New Card Button */}
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="p-4 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer transition-colors hover:border-gray-400"
+          onClick={() => setShowAddCard(true)}
+        >
+          <div className="flex items-center space-x-3">
+            <div className="text-2xl">➕</div>
+            <div className="flex-1">
+              <p className="font-medium text-gray-900">Add New Card</p>
+              <p className="text-sm text-gray-500">Add a new credit or debit card</p>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Add New Card */}
-      {showAddCard ? (
+      {/* Add New Card Form */}
+      {showAddCard && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
@@ -347,13 +374,6 @@ const PaymentStep: React.FC = () => {
             </button>
           </div>
         </motion.div>
-      ) : (
-        <button
-          onClick={() => setShowAddCard(true)}
-          className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors mb-6"
-        >
-          + Add Credit/Debit Card
-        </button>
       )}
 
       {/* Navigation */}
