@@ -16,6 +16,8 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({
   className = '' 
 }) => {
   const [isClient, setIsClient] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const { isLoggedIn } = useCart();
   const currentUser = getCurrentUser();
 
@@ -48,6 +50,16 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({
     return 'User';
   };
 
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoading(false);
+    setImageError(true);
+  };
+
   // Don't render until client-side to prevent hydration mismatch
   if (!isClient) {
     return null;
@@ -57,19 +69,32 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({
     return null;
   }
 
+  const shouldShowImage = currentUser?.photoURL && !imageError;
+
   return (
     <Link href="/profile">
       <motion.div
-        className={`${sizeClasses[size]} ${className} rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold flex items-center justify-center cursor-pointer hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md`}
+        className={`${sizeClasses[size]} ${className} rounded-full bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold flex items-center justify-center cursor-pointer hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md overflow-hidden`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {currentUser?.photoURL ? (
-          <img 
-            src={currentUser.photoURL} 
-            alt="Profile" 
-            className={`${sizeClasses[size]} rounded-full object-cover`}
-          />
+        {shouldShowImage ? (
+          <>
+            {imageLoading && (
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+                <span className="text-sm font-bold">
+                  {getInitials(getUserDisplayName())}
+                </span>
+              </div>
+            )}
+            <img 
+              src={currentUser.photoURL} 
+              alt="Profile" 
+              className={`${sizeClasses[size]} rounded-full object-cover ${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+            />
+          </>
         ) : (
           <span className="text-sm font-bold">
             {getInitials(getUserDisplayName())}
