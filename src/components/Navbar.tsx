@@ -25,6 +25,7 @@ const navItems = [
   { name: "Melts", href: "/melts", icon: GiSandwich },
   { name: "Sides", href: "/sides", icon: GiFrenchFries },
   { name: "Drinks", href: "/drinks", icon: GiSodaCan },
+  { name: "Track Order", href: "/tracking", icon: GiShoppingCart },
 ];
 
 export default function Navbar() {

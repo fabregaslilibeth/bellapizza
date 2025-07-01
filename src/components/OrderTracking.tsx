@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { getGuestOrders, getUserOrders } from '@/lib/orders';
 import { getCurrentUser } from '@/lib/auth';
 import { Order } from '@/types';
+import OrderTrackingModal from './OrderTrackingModal';
 
 interface OrderTrackingProps {
   email?: string;
@@ -12,8 +13,17 @@ interface OrderTrackingProps {
 
 const OrderTracking: React.FC<OrderTrackingProps> = ({ email }) => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
+  
+  // Filter and search states
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'date' | 'status' | 'total'>('date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,6 +44,7 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({ email }) => {
         }
         
         setOrders(fetchedOrders);
+        setFilteredOrders(fetchedOrders);
       } catch (err) {
         console.error('Error fetching orders:', err);
         setError('Failed to load orders');
@@ -45,22 +56,64 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({ email }) => {
     fetchOrders();
   }, [email]);
 
+  // Filter and sort orders
+  useEffect(() => {
+    let filtered = orders;
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(order => 
+        order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.items.some(item => 
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(order => order.status === statusFilter);
+    }
+
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortBy) {
+        case 'date':
+          comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          break;
+        case 'status':
+          const statusOrder = { pending: 1, confirmed: 2, preparing: 3, ready: 4, delivered: 5, cancelled: 6 };
+          comparison = (statusOrder[a.status as keyof typeof statusOrder] || 0) - (statusOrder[b.status as keyof typeof statusOrder] || 0);
+          break;
+        case 'total':
+          comparison = a.total - b.total;
+          break;
+      }
+      
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
+
+    setFilteredOrders(filtered);
+  }, [orders, searchTerm, statusFilter, sortBy, sortOrder]);
+
   const getStatusColor = (status: Order['status']) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'confirmed':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 text-blue-800 border-blue-200';
       case 'preparing':
-        return 'bg-orange-100 text-orange-800';
+        return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'ready':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'delivered':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 border-green-200';
       case 'cancelled':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-red-800 border-red-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
@@ -83,86 +136,288 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({ email }) => {
     }
   };
 
+  const getStatusPriority = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-500';
+      case 'confirmed':
+        return 'bg-blue-500';
+      case 'preparing':
+        return 'bg-orange-500';
+      case 'ready':
+        return 'bg-purple-500';
+      case 'delivered':
+        return 'bg-green-500';
+      case 'cancelled':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-500';
+    }
+  };
+
+  const formatOrderDate = (date: string | Date) => {
+    const orderDate = new Date(date);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - orderDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+      return 'Today';
+    } else if (diffDays === 2) {
+      return 'Yesterday';
+    } else if (diffDays <= 7) {
+      return `${diffDays - 1} days ago`;
+    } else {
+      return orderDate.toLocaleDateString();
+    }
+  };
+
+  const getOrderSummary = (order: Order) => {
+    const itemCount = order.items.reduce((total, item) => total + item.quantity, 0);
+    const uniqueItems = order.items.length;
+    return `${itemCount} item${itemCount !== 1 ? 's' : ''} (${uniqueItems} unique)`;
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your orders...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-        <p className="text-red-700">{error}</p>
+      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+        <div className="flex items-center space-x-3">
+          <div className="text-2xl">⚠️</div>
+          <div>
+            <h3 className="text-lg font-medium text-red-800">Error Loading Orders</h3>
+            <p className="text-red-700">{error}</p>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (orders.length === 0) {
     return (
-      <div className="text-center p-8">
-        <div className="text-4xl mb-4">📋</div>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">No Orders Found</h3>
-        <p className="text-gray-500">You haven&apos;t placed any orders yet.</p>
+      <div className="text-center p-12">
+        <div className="text-6xl mb-6">📋</div>
+        <h3 className="text-2xl font-semibold text-gray-900 mb-3">No Orders Found</h3>
+        <p className="text-gray-600 mb-6 max-w-md mx-auto">
+          You haven&apos;t placed any orders yet. Start by exploring our menu and placing your first order!
+        </p>
+        <button 
+          onClick={() => window.location.href = '/'}
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Browse Menu
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Your Orders</h2>
-      {orders.map((order) => (
-        <motion.div
-          key={order.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
-        >
-          <div className="flex items-start justify-between mb-3">
-            <div>
-              <h3 className="font-medium text-gray-900">Order #{order.id}</h3>
-              <p className="text-sm text-gray-500">
-                {new Date(order.createdAt).toLocaleDateString()} at{' '}
-                {new Date(order.createdAt).toLocaleTimeString()}
-              </p>
-            </div>
-            <div className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-              <span className="mr-1">{getStatusIcon(order.status)}</span>
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-            </div>
+    <div className="space-y-6">
+      {/* Header with Stats */}
+      <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Your Orders</h2>
+            <p className="text-gray-600">Track and manage your order history</p>
           </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-blue-600">{orders.length}</div>
+            <div className="text-sm text-gray-600">Total Orders</div>
+          </div>
+        </div>
+        
+                 {/* Quick Stats */}
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+           {(['pending', 'preparing', 'ready', 'delivered'] as const).map(status => {
+             const count = orders.filter(order => order.status === status).length;
+             return (
+               <div key={status} className="text-center p-3 bg-gray-50 rounded-lg">
+                 <div className={`text-lg font-semibold ${getStatusPriority(status)} text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2`}>
+                   {getStatusIcon(status)}
+                 </div>
+                 <div className="text-xl font-bold text-gray-900">{count}</div>
+                 <div className="text-xs text-gray-600 capitalize">{status}</div>
+               </div>
+             );
+           })}
+         </div>
+      </div>
 
-          <div className="space-y-2 mb-3">
-            {order.items.map((item) => (
-              <div key={item.id} className="flex justify-between items-center text-sm">
-                <div className="flex items-center space-x-2">
-                  <img 
-                    src={item.image} 
-                    alt={item.name} 
-                    className="w-8 h-8 object-cover rounded"
-                  />
-                  <span className="font-medium">{item.name}</span>
-                  <span className="text-gray-500">x{item.quantity}</span>
+      {/* Filters and Search */}
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          {/* Search */}
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Search orders by ID or item name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          
+          {/* Status Filter */}
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="preparing">Preparing</option>
+            <option value="ready">Ready</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          
+          {/* Sort */}
+          <select
+            value={`${sortBy}-${sortOrder}`}
+            onChange={(e) => {
+              const [newSortBy, newSortOrder] = e.target.value.split('-') as [typeof sortBy, typeof sortOrder];
+              setSortBy(newSortBy);
+              setSortOrder(newSortOrder);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="date-desc">Newest First</option>
+            <option value="date-asc">Oldest First</option>
+            <option value="total-desc">Highest Total</option>
+            <option value="total-asc">Lowest Total</option>
+            <option value="status-asc">Status A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Results Count */}
+      {filteredOrders.length !== orders.length && (
+        <div className="text-sm text-gray-600">
+          Showing {filteredOrders.length} of {orders.length} orders
+        </div>
+      )}
+
+      {/* Orders List */}
+      <div className="space-y-4">
+        {filteredOrders.map((order, index) => (
+          <motion.div
+            key={order.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div className="p-6">
+              {/* Order Header */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900">Order #{order.id}</h3>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(order.status)}`}>
+                      <span className="mr-1">{getStatusIcon(order.status)}</span>
+                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                    <span>📅 {formatOrderDate(order.createdAt)}</span>
+                    <span>🕒 {new Date(order.createdAt).toLocaleTimeString()}</span>
+                    <span>📦 {getOrderSummary(order)}</span>
+                  </div>
                 </div>
-                <span className="font-medium">P{item.price * item.quantity}</span>
+                <div className="text-right">
+                  <div className="text-xl font-bold text-gray-900">P{order.total.toFixed(2)}</div>
+                  <div className="text-sm text-gray-600">Total</div>
+                </div>
               </div>
-            ))}
-          </div>
 
-          <div className="border-t pt-3">
-            <div className="flex justify-between items-center">
-              <div className="text-sm text-gray-600">
-                <p>Total: <span className="font-medium text-gray-900">P{order.total.toFixed(2)}</span></p>
-                <p>Estimated: <span className="font-medium">{order.estimatedTime}</span></p>
+              {/* Order Items Preview */}
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2">
+                  {order.items.slice(0, 3).map((item) => (
+                    <div key={item.id} className="flex items-center space-x-2 bg-gray-50 px-3 py-1 rounded-full">
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className="w-6 h-6 object-cover rounded-full"
+                      />
+                      <span className="text-sm font-medium">{item.name}</span>
+                      <span className="text-xs text-gray-500">x{item.quantity}</span>
+                    </div>
+                  ))}
+                  {order.items.length > 3 && (
+                    <div className="flex items-center bg-gray-50 px-3 py-1 rounded-full">
+                      <span className="text-sm text-gray-600">+{order.items.length - 3} more</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <button className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-                Track Order
-              </button>
+
+              {/* Order Footer */}
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className="flex items-center space-x-4 text-sm text-gray-600">
+                  <span>⏱️ Est: {order.estimatedTime}</span>
+                  <span>💳 {order.paymentMethod.type}</span>
+                  {order.deliveryAddress && <span>🚚 Delivery</span>}
+                </div>
+                <div className="flex space-x-3">
+                  <button 
+                    onClick={() => {
+                      setSelectedOrder(order);
+                      setIsTrackingModalOpen(true);
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  >
+                    <span>📍</span>
+                    <span>Track Order</span>
+                  </button>
+                  <button 
+                    onClick={() => {
+                      // Copy order ID to clipboard
+                      navigator.clipboard.writeText(order.id);
+                    }}
+                    className="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    title="Copy Order ID"
+                  >
+                    📋
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* No Results */}
+      {filteredOrders.length === 0 && orders.length > 0 && (
+        <div className="text-center p-8 bg-gray-50 rounded-lg">
+          <div className="text-4xl mb-4">🔍</div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No Orders Match Your Search</h3>
+          <p className="text-gray-600">Try adjusting your filters or search terms.</p>
+        </div>
+      )}
+
+      {/* Order Tracking Modal */}
+      {selectedOrder && (
+        <OrderTrackingModal
+          order={selectedOrder}
+          isOpen={isTrackingModalOpen}
+          onClose={() => {
+            setIsTrackingModalOpen(false);
+            setSelectedOrder(null);
+          }}
+        />
+      )}
     </div>
   );
 };
