@@ -43,7 +43,7 @@ export default function AdminPage() {
         return;
       }
       
-      // Check if user is admin (you can add admin email check here)
+      // Check if user is admin
       // For now, we'll allow any authenticated user to access admin
       // In production, you should check against a list of admin emails
     });
