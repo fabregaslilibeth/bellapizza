@@ -16,6 +16,7 @@ import {
 import { db } from '@/lib/firebase';
 import { FirestoreUser } from '@/lib/orders';
 import { Order, CartItem } from '@/types';
+import { checkIfUserIsAdmin } from '@/lib/auth';
 
 interface AdminUser extends FirestoreUser {
   id: string;
@@ -24,6 +25,8 @@ interface AdminUser extends FirestoreUser {
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'users' | 'orders'>('orders');
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -31,9 +34,9 @@ export default function AdminPage() {
   const [ordersLoading, setOrdersLoading] = useState(false);
   const router = useRouter();
 
-  // Check authentication
+  // Check authentication and admin status
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       setLoading(false);
       
@@ -44,8 +47,27 @@ export default function AdminPage() {
       }
       
       // Check if user is admin
-      // For now, we'll allow any authenticated user to access admin
-      // In production, you should check against a list of admin emails
+      setAdminLoading(true);
+      try {
+        console.log('Checking admin status for user:', user.email, user.uid);
+        const adminStatus = await checkIfUserIsAdmin(user);
+        console.log('Admin status result:', adminStatus);
+        setIsAdmin(adminStatus);
+        
+        // If not admin, redirect to home
+        if (!adminStatus) {
+          console.log('User is not admin, redirecting to home');
+          router.push('/');
+          return;
+        }
+        console.log('User is admin, proceeding to admin dashboard');
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        router.push('/');
+        return;
+      } finally {
+        setAdminLoading(false);
+      }
     });
 
     return () => unsubscribe();
@@ -153,7 +175,7 @@ export default function AdminPage() {
     }).format(amount);
   };
 
-  if (loading) {
+  if (loading || adminLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -164,7 +186,7 @@ export default function AdminPage() {
     );
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return null; // Will redirect
   }
 
