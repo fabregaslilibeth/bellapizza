@@ -10,10 +10,13 @@ import {
   limit, 
   Timestamp,
   DocumentData,
-  QueryDocumentSnapshot
+  QueryDocumentSnapshot,
+  getDoc,
+  setDoc
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { Order, CartItem, PaymentMethod, DeliveryAddress } from '@/types';
+import { isEmailInAdminWhitelist } from './auth';
 
 // Firestore interfaces
 export interface FirestoreOrder {
@@ -45,6 +48,7 @@ export interface FirestoreUser {
   createdAt: Timestamp;
   lastLoginAt: Timestamp;
   isGuest: boolean;
+  isAdmin?: boolean;
   paymentMethods?: PaymentMethod[];
   deliveryAddresses?: DeliveryAddress[];
   updatedAt?: Timestamp;
@@ -142,6 +146,45 @@ export const createOrder = async (order: Order, userId?: string): Promise<string
   }
 };
 
+// Set user as admin
+export const setUserAsAdmin = async (userId: string, isAdmin: boolean = true): Promise<void> => {
+  try {
+    console.log('Setting user as admin:', userId, isAdmin);
+    const userRef = doc(db, 'users', userId);
+    
+    // First check if user document exists
+    const userDoc = await getDoc(userRef);
+    console.log('User document exists:', userDoc.exists());
+    
+    if (userDoc.exists()) {
+      console.log('Updating existing user document...');
+      await updateDoc(userRef, {
+        isAdmin,
+        updatedAt: Timestamp.now()
+      });
+    } else {
+      console.log('Creating new user document...');
+      // Create a basic user document if it doesn't exist
+      const userData: FirestoreUser = {
+        email: '', // Will be filled by the calling function
+        firstName: '',
+        lastName: '',
+        phone: '',
+        createdAt: Timestamp.now(),
+        lastLoginAt: Timestamp.now(),
+        isGuest: false,
+        isAdmin: true,
+      };
+      await setDoc(userRef, userData);
+    }
+    
+    console.log('Admin setup completed successfully');
+  } catch (error) {
+    console.error('Error setting user as admin:', error);
+    throw new Error(`Failed to set user as admin: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+};
+
 // Create or update guest user
 export const createOrUpdateGuestUser = async (email: string, guestInfo: { firstName: string; lastName: string; phone: string }) => {
   try {
@@ -157,6 +200,7 @@ export const createOrUpdateGuestUser = async (email: string, guestInfo: { firstN
       createdAt: Timestamp.now(),
       lastLoginAt: Timestamp.now(),
       isGuest: true,
+      isAdmin: isEmailInAdminWhitelist(email), // Check if email is in admin whitelist
     };
     
     if (querySnapshot.empty) {
@@ -170,6 +214,7 @@ export const createOrUpdateGuestUser = async (email: string, guestInfo: { firstN
         lastName: guestInfo.lastName,
         phone: guestInfo.phone,
         lastLoginAt: Timestamp.now(),
+        isAdmin: isEmailInAdminWhitelist(email), // Update admin status
       });
     }
   } catch (error) {
