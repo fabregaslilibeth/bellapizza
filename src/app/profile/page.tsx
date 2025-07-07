@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
-import { getCurrentUser, signOut } from "@/lib/auth";
+import { getCurrentUser, signOut, checkIfUserIsAdmin } from "@/lib/auth";
 import { User } from "firebase/auth";
 import Link from "next/link";
 import { FiLogOut } from "react-icons/fi";
@@ -67,15 +67,21 @@ export default function ProfilePage() {
     deliveryAddresses: [],
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || "profile");
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Prevent hydration mismatch by ensuring we're on the client
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    console.log('Saving active tab:', activeTab);
+    localStorage.setItem('activeTab', activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     if (isClient && isLoggedIn) {
@@ -87,6 +93,15 @@ export default function ProfilePage() {
   }, [isClient, isLoggedIn]);
 
   const loadUserProfile = async (user: User) => {
+    // Check if user is admin
+    try {
+      const adminStatus = await checkIfUserIsAdmin(user);
+      setIsAdmin(adminStatus);
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+      setIsAdmin(false);
+    }
+
     setProfile({
       firstName: user?.displayName?.split(" ")[0] || "",
       lastName: user?.displayName?.split(" ").slice(1).join(" ") || "",
@@ -197,7 +212,9 @@ export default function ProfilePage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center h-full mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {isAdmin ? "My Admin Profile" : "My Profile"}
+            </h1>
             <p className="text-gray-600">
                 Manage your account settings and preferences
             </p>

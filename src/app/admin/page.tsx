@@ -13,6 +13,7 @@ import {
   doc,
   Timestamp 
 } from 'firebase/firestore';
+import type { Timestamp as FirestoreTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { FirestoreUser } from '@/lib/orders';
 import { Order, CartItem } from '@/types';
@@ -32,7 +33,18 @@ export default function AdminPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [usersLoading, setUsersLoading] = useState(false);
   const [ordersLoading, setOrdersLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  
+  // Filter states
+  const [orderStatusFilter, setOrderStatusFilter] = useState<string>('all');
+  const [userTypeFilter, setUserTypeFilter] = useState<string>('all');
+  
   const router = useRouter();
+
+  // Ensure component is mounted on client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Check authentication and admin status
   useEffect(() => {
@@ -131,14 +143,23 @@ export default function AdminPage() {
     }
   };
 
-  // Load data when tab changes
+  // Load initial data when user is authenticated
   useEffect(() => {
-    if (activeTab === 'users') {
-      fetchUsers();
-    } else {
+    if (user && isAdmin && !adminLoading) {
       fetchOrders();
     }
-  }, [activeTab]);
+  }, [user, isAdmin, adminLoading]);
+
+  // Load data when tab changes and user is authenticated
+  useEffect(() => {
+    if (user && isAdmin && !adminLoading) {
+      if (activeTab === 'users') {
+        fetchUsers();
+      } else {
+        fetchOrders();
+      }
+    }
+  }, [activeTab, user, isAdmin, adminLoading]);
 
   // Update order status
   const updateOrderStatus = async (orderId: string, newStatus: Order['status']) => {
@@ -156,15 +177,34 @@ export default function AdminPage() {
     }
   };
 
-  // Format date
+  // Format date with consistent locale
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
+    // Use a completely deterministic format
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${month} ${day}, ${year} ${hours}:${minutes}`;
+  };
+
+  // Format Firestore timestamp safely
+  const formatTimestamp = (timestamp: FirestoreTimestamp | Date | null | undefined) => {
+    if (!timestamp) return 'N/A';
+    
+    try {
+      if ('toDate' in timestamp && typeof timestamp.toDate === 'function') {
+        return formatDate(timestamp.toDate());
+      } else if (timestamp instanceof Date) {
+        return formatDate(timestamp);
+      } else {
+        return 'Invalid date';
+      }
+    } catch (error) {
+      console.error('Error formatting timestamp:', error);
+      return 'Invalid date';
+    }
   };
 
   // Format currency
@@ -175,12 +215,39 @@ export default function AdminPage() {
     }).format(amount);
   };
 
-  if (loading || adminLoading) {
+  // Filter orders based on status
+  const filteredOrders = orders.filter(order => {
+    if (orderStatusFilter === 'all') return true;
+    return order.status === orderStatusFilter;
+  });
+
+  // Filter users based on type
+  const filteredUsers = users.filter(user => {
+    if (userTypeFilter === 'all') return true;
+    if (userTypeFilter === 'guest') return user.isGuest;
+    if (userTypeFilter === 'registered') return !user.isGuest;
+    return true;
+  });
+
+  // Show loading state during SSR or while not mounted
+  if (!mounted) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state while checking authentication
+  if (loading || adminLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Checking authentication...</p>
         </div>
       </div>
     );
@@ -199,7 +266,7 @@ export default function AdminPage() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
               <p className="mt-1 text-sm text-gray-500">
-                Welcome back, {user.email}
+                Welcome back, {user?.email || 'Admin'}
               </p>
             </div>
             <button
@@ -243,7 +310,30 @@ export default function AdminPage() {
         {activeTab === 'orders' ? (
           <div className="bg-white shadow rounded-lg">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900">Recent Orders</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="text-lg font-medium text-gray-900">Recent Orders</h2>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <label htmlFor="orderStatusFilter" className="text-sm font-medium text-gray-700">
+                      Status:
+                    </label>
+                    <select
+                      id="orderStatusFilter"
+                      value={orderStatusFilter}
+                      onChange={(e) => setOrderStatusFilter(e.target.value)}
+                      className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="all">All Statuses</option>
+                      <option value="pending">Pending</option>
+                      <option value="confirmed">Confirmed</option>
+                      <option value="preparing">Preparing</option>
+                      <option value="ready">Ready</option>
+                      <option value="delivered">Delivered</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
             
             {ordersLoading ? (
@@ -251,9 +341,9 @@ export default function AdminPage() {
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
                 <p className="mt-2 text-gray-600">Loading orders...</p>
               </div>
-            ) : orders.length === 0 ? (
+            ) : filteredOrders.length === 0 ? (
               <div className="p-6 text-center text-gray-500">
-                No orders found
+                {orders.length === 0 ? 'No orders found' : 'No orders match the selected filter'}
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -284,7 +374,7 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {orders.map((order) => (
+                    {filteredOrders.map((order) => (
                       <tr key={order.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {order.id.slice(-8)}
@@ -351,7 +441,26 @@ export default function AdminPage() {
         ) : (
           <div className="bg-white shadow rounded-lg">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-medium text-gray-900">Registered Users</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="text-lg font-medium text-gray-900">Registered Users</h2>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <label htmlFor="userTypeFilter" className="text-sm font-medium text-gray-700">
+                      User Type:
+                    </label>
+                    <select
+                      id="userTypeFilter"
+                      value={userTypeFilter}
+                      onChange={(e) => setUserTypeFilter(e.target.value)}
+                      className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                      <option value="all">All Users</option>
+                      <option value="registered">Registered</option>
+                      <option value="guest">Guest</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
             
             {usersLoading ? (
@@ -359,9 +468,9 @@ export default function AdminPage() {
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
                 <p className="mt-2 text-gray-600">Loading users...</p>
               </div>
-            ) : users.length === 0 ? (
+            ) : filteredUsers.length === 0 ? (
               <div className="p-6 text-center text-gray-500">
-                No users found
+                {users.length === 0 ? 'No users found' : 'No users match the selected filter'}
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -389,7 +498,7 @@ export default function AdminPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {users.map((user) => (
+                    {filteredUsers.map((user) => (
                       <tr key={user.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {user.firstName} {user.lastName}
@@ -408,10 +517,10 @@ export default function AdminPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {formatDate(user.createdAt.toDate())}
+                          {formatTimestamp(user.createdAt)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {formatDate(user.lastLoginAt.toDate())}
+                          {formatTimestamp(user.lastLoginAt)}
                         </td>
                       </tr>
                     ))}
