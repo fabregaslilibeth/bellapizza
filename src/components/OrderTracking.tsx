@@ -237,8 +237,8 @@ const OrderTracking: React.FC<OrderTrackingProps> = ({ email }) => {
         </div>
         
                  {/* Quick Stats */}
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-           {(['pending', 'preparing', 'ready', 'delivered'] as const).map(status => {
+         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+           {(['pending', 'preparing', 'confirmed', 'ready', 'delivered', 'cancelled'] as const).map(status => {
              const count = orders.filter(order => order.status === status).length;
              return (
                <div key={status} className="text-center p-3 bg-gray-50 rounded-lg">
