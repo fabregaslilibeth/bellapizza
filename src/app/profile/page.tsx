@@ -8,6 +8,8 @@ import { User } from "firebase/auth";
 import Link from "next/link";
 import { FiLogOut } from "react-icons/fi";
 import OrderTracking from "@/components/OrderTracking";
+import AddAddressModal from "@/components/AddAddressModal";
+import { getUserProfile, addDeliveryAddress, updateUserProfile, updateUserPreferences } from "@/lib/userProfile";
 
 interface UserProfile {
   firstName: string;
@@ -43,7 +45,7 @@ interface DeliveryAddress {
   name: string;
   address: string;
   city: string;
-  state: string;
+  province: string;
   zipCode: string;
   phone: string;
   isDefault: boolean;
@@ -72,6 +74,7 @@ export default function ProfilePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
 
   // Prevent hydration mismatch by ensuring we're on the client
   useEffect(() => {
@@ -93,55 +96,85 @@ export default function ProfilePage() {
   }, [isClient, isLoggedIn]);
 
   const loadUserProfile = async (user: User) => {
-    // Check if user is admin
     try {
+      // Check if user is admin
       const adminStatus = await checkIfUserIsAdmin(user);
       setIsAdmin(adminStatus);
-    } catch (error) {
-      console.error("Error checking admin status:", error);
-      setIsAdmin(false);
-    }
 
-    setProfile({
-      firstName: user?.displayName?.split(" ")[0] || "",
-      lastName: user?.displayName?.split(" ").slice(1).join(" ") || "",
-      email: user?.email || "",
-      phone: "",
-      birthday: { day: "", month: "", year: "" },
-      preferences: {
-        emailUpdates: true,
-        smsUpdates: false,
-        htmlEmail: true,
-        pizzaHutNews: true,
-      },
-      paymentMethods: [
-        {
-          id: "1",
-          type: "card",
-          last4: "1234",
-          brand: "Visa",
-          isDefault: true,
+      // Load user profile from Firebase
+      const userProfileData = await getUserProfile(user.uid);
+      
+      setProfile({
+        firstName: userProfileData.firstName || user?.displayName?.split(" ")[0] || "",
+        lastName: userProfileData.lastName || user?.displayName?.split(" ").slice(1).join(" ") || "",
+        email: user?.email || "",
+        phone: userProfileData.phone || "",
+        birthday: userProfileData.birthday || { day: "", month: "", year: "" },
+        preferences: userProfileData.preferences || {
+          emailUpdates: true,
+          smsUpdates: false,
+          htmlEmail: true,
+          pizzaHutNews: true,
         },
-      ],
-      deliveryAddresses: [
-        {
-          id: "1",
-          name: "Home",
-          address: "123 Main St",
-          city: "Manila",
-          state: "Metro Manila",
-          zipCode: "1000",
-          phone: "+63 912 345 6789",
-          isDefault: true,
+        paymentMethods: userProfileData.paymentMethods || [
+          {
+            id: "1",
+            type: "card",
+            last4: "1234",
+            brand: "Visa",
+            isDefault: true,
+          },
+        ],
+        deliveryAddresses: userProfileData.deliveryAddresses || [
+          {
+            id: "1",
+            name: "Home",
+            address: "123 Main St",
+            city: "Manila",
+            province: "Metro Manila",
+            zipCode: "1000",
+            phone: "+63 912 345 6789",
+            isDefault: true,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error("Error loading user profile:", error);
+      // Fallback to basic profile if Firebase fails
+      setProfile({
+        firstName: user?.displayName?.split(" ")[0] || "",
+        lastName: user?.displayName?.split(" ").slice(1).join(" ") || "",
+        email: user?.email || "",
+        phone: "",
+        birthday: { day: "", month: "", year: "" },
+        preferences: {
+          emailUpdates: true,
+          smsUpdates: false,
+          htmlEmail: true,
+          pizzaHutNews: true,
         },
-      ],
-    });
+        paymentMethods: [],
+        deliveryAddresses: [],
+      });
+    }
   };
 
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const user = getCurrentUser();
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      // Save profile data to Firebase
+      await updateUserProfile(user.uid, {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        phone: profile.phone,
+        birthday: profile.birthday,
+      });
+
       setIsEditing(false);
     } catch (error) {
       console.error("Error saving profile:", error);
@@ -165,6 +198,48 @@ export default function ProfilePage() {
       await signOut();
     } catch (error) {
       console.error("Error signing out:", error);
+    }
+  };
+
+  const handleAddAddress = async (addressData: Omit<DeliveryAddress, "id">) => {
+    setIsLoading(true);
+    try {
+      const user = getCurrentUser();
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      // Save to Firebase
+      await addDeliveryAddress(user.uid, addressData);
+
+      // Update local state
+      const newAddress: DeliveryAddress = {
+        ...addressData,
+        id: Date.now().toString(),
+      };
+
+      // If this is set as default, unset other addresses as default
+      if (addressData.isDefault) {
+        setProfile((prev) => ({
+          ...prev,
+          deliveryAddresses: prev.deliveryAddresses.map((addr) => ({
+            ...addr,
+            isDefault: false,
+          })),
+        }));
+      }
+
+      // Add the new address
+      setProfile((prev) => ({
+        ...prev,
+        deliveryAddresses: [...prev.deliveryAddresses, newAddress],
+      }));
+
+      setIsAddAddressModalOpen(false);
+    } catch (error) {
+      console.error("Error adding address:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -547,7 +622,20 @@ export default function ProfilePage() {
 
                   <div className="mt-6 flex justify-end">
                     <button
-                      onClick={handleSave}
+                      onClick={async () => {
+                        setIsLoading(true);
+                        try {
+                          const user = getCurrentUser();
+                          if (!user) {
+                            throw new Error("User not authenticated");
+                          }
+                          await updateUserPreferences(user.uid, profile.preferences);
+                        } catch (error) {
+                          console.error("Error saving preferences:", error);
+                        } finally {
+                          setIsLoading(false);
+                        }
+                      }}
                       disabled={isLoading}
                       className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
                     >
@@ -626,7 +714,10 @@ export default function ProfilePage() {
                     <h2 className="text-xl font-semibold text-gray-900">
                       Delivery Addresses
                     </h2>
-                    <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    <button 
+                      onClick={() => setIsAddAddressModalOpen(true)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
                       Add Address
                     </button>
                   </div>
@@ -653,7 +744,7 @@ export default function ProfilePage() {
                               {address.address}
                             </p>
                             <p className="text-gray-600 text-sm">
-                              {address.city}, {address.state} {address.zipCode}
+                              {address.city}, {address.province} {address.zipCode}
                             </p>
                             <p className="text-gray-600 text-sm">{address.phone}</p>
                           </div>
@@ -738,6 +829,14 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Add Address Modal */}
+      <AddAddressModal
+        isOpen={isAddAddressModalOpen}
+        onClose={() => setIsAddAddressModalOpen(false)}
+        onSave={handleAddAddress}
+        existingAddresses={profile.deliveryAddresses}
+      />
     </div>
   );
 }
