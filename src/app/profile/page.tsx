@@ -9,7 +9,8 @@ import Link from "next/link";
 import { FiLogOut } from "react-icons/fi";
 import OrderTracking from "@/components/OrderTracking";
 import AddAddressModal from "@/components/AddAddressModal";
-import { getUserProfile, addDeliveryAddress, updateUserProfile, updateUserPreferences } from "@/lib/userProfile";
+import AddPaymentMethodModal from "@/components/AddPaymentMethodModal";
+import { getUserProfile, addDeliveryAddress, addPaymentMethod, updateUserProfile, updateUserPreferences } from "@/lib/userProfile";
 
 interface UserProfile {
   firstName: string;
@@ -75,6 +76,7 @@ export default function ProfilePage() {
   const [isClient, setIsClient] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
+  const [isAddPaymentMethodModalOpen, setIsAddPaymentMethodModalOpen] = useState(false);
 
   // Prevent hydration mismatch by ensuring we're on the client
   useEffect(() => {
@@ -238,6 +240,48 @@ export default function ProfilePage() {
       setIsAddAddressModalOpen(false);
     } catch (error) {
       console.error("Error adding address:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAddPaymentMethod = async (paymentMethodData: Omit<PaymentMethod, "id">) => {
+    setIsLoading(true);
+    try {
+      const user = getCurrentUser();
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      // Save to Firebase
+      await addPaymentMethod(user.uid, paymentMethodData);
+
+      // Update local state
+      const newPaymentMethod: PaymentMethod = {
+        ...paymentMethodData,
+        id: Date.now().toString(),
+      };
+
+      // If this is set as default, unset other payment methods as default
+      if (paymentMethodData.isDefault) {
+        setProfile((prev) => ({
+          ...prev,
+          paymentMethods: prev.paymentMethods.map((pm) => ({
+            ...pm,
+            isDefault: false,
+          })),
+        }));
+      }
+
+      // Add the new payment method
+      setProfile((prev) => ({
+        ...prev,
+        paymentMethods: [...prev.paymentMethods, newPaymentMethod],
+      }));
+
+      setIsAddPaymentMethodModalOpen(false);
+    } catch (error) {
+      console.error("Error adding payment method:", error);
     } finally {
       setIsLoading(false);
     }
@@ -655,7 +699,10 @@ export default function ProfilePage() {
                     <h2 className="text-xl font-semibold text-gray-900">
                       Payment Methods
                     </h2>
-                    <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    <button 
+                      onClick={() => setIsAddPaymentMethodModalOpen(true)}
+                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
                       Add Payment Method
                     </button>
                   </div>
@@ -836,6 +883,14 @@ export default function ProfilePage() {
         onClose={() => setIsAddAddressModalOpen(false)}
         onSave={handleAddAddress}
         existingAddresses={profile.deliveryAddresses}
+      />
+
+      {/* Add Payment Method Modal */}
+      <AddPaymentMethodModal
+        isOpen={isAddPaymentMethodModalOpen}
+        onClose={() => setIsAddPaymentMethodModalOpen(false)}
+        onSave={handleAddPaymentMethod}
+        existingPaymentMethods={profile.paymentMethods}
       />
     </div>
   );

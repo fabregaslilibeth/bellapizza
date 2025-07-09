@@ -8,6 +8,16 @@ import {
 import { db } from './firebase';
 import { DeliveryAddress } from '@/types';
 
+// Payment method interface for profile page (compatible with existing code)
+interface ProfilePaymentMethod {
+  id: string;
+  type: "card" | "paypal";
+  last4?: string;
+  brand?: string;
+  email?: string;
+  isDefault: boolean;
+}
+
 // Get user profile data including addresses
 export const getUserProfile = async (userId: string) => {
   try {
@@ -239,6 +249,171 @@ export const updateUserProfile = async (
     });
   } catch (error) {
     console.error('Error updating user profile:', error);
+    throw error;
+  }
+};
+
+// Add a new payment method
+export const addPaymentMethod = async (
+  userId: string, 
+  paymentMethod: Omit<ProfilePaymentMethod, 'id'>
+): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    
+    // Generate a new ID for the payment method
+    const newPaymentMethod: ProfilePaymentMethod = {
+      ...paymentMethod,
+      id: Date.now().toString(),
+    };
+
+    // If this is set as default, we need to unset other payment methods as default
+    if (paymentMethod.isDefault) {
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const existingPaymentMethods = userData.paymentMethods || [];
+        
+        // Update all existing payment methods to not be default
+        const updatedPaymentMethods = existingPaymentMethods.map((pm: ProfilePaymentMethod) => ({
+          ...pm,
+          isDefault: false,
+        }));
+        
+        // Add the new payment method
+        updatedPaymentMethods.push(newPaymentMethod);
+        
+        await updateDoc(userRef, {
+          paymentMethods: updatedPaymentMethods,
+          updatedAt: Timestamp.now(),
+        });
+      } else {
+        // User document doesn't exist, create it with the new payment method
+        await updateDoc(userRef, {
+          paymentMethods: [newPaymentMethod],
+          updatedAt: Timestamp.now(),
+        });
+      }
+    } else {
+      // Just add the new payment method without changing defaults
+      await updateDoc(userRef, {
+        paymentMethods: arrayUnion(newPaymentMethod),
+        updatedAt: Timestamp.now(),
+      });
+    }
+  } catch (error) {
+    console.error('Error adding payment method:', error);
+    throw error;
+  }
+};
+
+// Update an existing payment method
+export const updatePaymentMethod = async (
+  userId: string,
+  paymentMethodId: string,
+  updatedPaymentMethod: Partial<ProfilePaymentMethod>
+): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      throw new Error('User not found');
+    }
+    
+    const userData = userDoc.data();
+    const existingPaymentMethods = userData.paymentMethods || [];
+    
+    // Find and update the specific payment method
+    const updatedPaymentMethods = existingPaymentMethods.map((pm: ProfilePaymentMethod) => {
+      if (pm.id === paymentMethodId) {
+        return { ...pm, ...updatedPaymentMethod };
+      }
+      return pm;
+    });
+    
+    // If this payment method is being set as default, unset others
+    if (updatedPaymentMethod.isDefault) {
+      const finalPaymentMethods = updatedPaymentMethods.map((pm: ProfilePaymentMethod) => ({
+        ...pm,
+        isDefault: pm.id === paymentMethodId,
+      }));
+      
+      await updateDoc(userRef, {
+        paymentMethods: finalPaymentMethods,
+        updatedAt: Timestamp.now(),
+      });
+    } else {
+      await updateDoc(userRef, {
+        paymentMethods: updatedPaymentMethods,
+        updatedAt: Timestamp.now(),
+      });
+    }
+  } catch (error) {
+    console.error('Error updating payment method:', error);
+    throw error;
+  }
+};
+
+// Delete a payment method
+export const deletePaymentMethod = async (
+  userId: string,
+  paymentMethodId: string
+): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      throw new Error('User not found');
+    }
+    
+    const userData = userDoc.data();
+    const existingPaymentMethods = userData.paymentMethods || [];
+    
+    // Remove the payment method
+    const updatedPaymentMethods = existingPaymentMethods.filter(
+      (pm: ProfilePaymentMethod) => pm.id !== paymentMethodId
+    );
+    
+    await updateDoc(userRef, {
+      paymentMethods: updatedPaymentMethods,
+      updatedAt: Timestamp.now(),
+    });
+  } catch (error) {
+    console.error('Error deleting payment method:', error);
+    throw error;
+  }
+};
+
+// Set a payment method as default
+export const setDefaultPaymentMethod = async (
+  userId: string,
+  paymentMethodId: string
+): Promise<void> => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    if (!userDoc.exists()) {
+      throw new Error('User not found');
+    }
+    
+    const userData = userDoc.data();
+    const existingPaymentMethods = userData.paymentMethods || [];
+    
+    // Update all payment methods to set only the specified one as default
+    const updatedPaymentMethods = existingPaymentMethods.map((pm: ProfilePaymentMethod) => ({
+      ...pm,
+      isDefault: pm.id === paymentMethodId,
+    }));
+    
+    await updateDoc(userRef, {
+      paymentMethods: updatedPaymentMethods,
+      updatedAt: Timestamp.now(),
+    });
+  } catch (error) {
+    console.error('Error setting default payment method:', error);
     throw error;
   }
 }; 
