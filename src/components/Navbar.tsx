@@ -347,7 +347,7 @@ export default function Navbar() {
                     transition={{ delay: 0.5, duration: 0.3 }}
                     className="text-center text-gray-500 text-sm"
                   >
-                    Bella Pizza
+                    Pizza
                   </motion.div>
                 </div>
               </div>
