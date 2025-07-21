@@ -4,8 +4,13 @@ import { useState } from 'react';
 import { useOrderPreference } from '@/context/OrderPreferenceContext';
 
 export default function ChangeAddress() {
-  const { orderPreference, address, selectedStore, isChangeAddressVisible, setIsChangeAddressVisible, setAddress, setSelectedStore } = useOrderPreference();
+  const { orderPreference, address, selectedStore, isChangeAddressVisible, setIsChangeAddressVisible, setAddress, setSelectedStore, isLoaded } = useOrderPreference();
   const [ isChangingStore, setIsChangingStore ] = useState(false);
+
+  // Don't render until localStorage values are loaded to prevent hydration mismatch
+  if (!isLoaded) {
+    return null;
+  }
 
   const confirmChangeAddress = () => {
     setIsChangingStore(true);

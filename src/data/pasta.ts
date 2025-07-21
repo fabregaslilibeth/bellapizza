@@ -46,7 +46,7 @@ export const pasta = {
             "menu_attributes": [
                 {
                     "image": {
-                        "icon": "https://static.phdvasia.com/sg1/menu/attribute/icon_4f64279d-17fb-4d8e-bd08-733df8a08c06.png"
+                        "icon": ""
                     },
                     "sequence": 1,
                     "updated_at": "2024-10-18 06:07:14",
@@ -193,7 +193,7 @@ export const pasta = {
             "menu_attributes": [
                 {
                     "image": {
-                        "icon": "https://static.phdvasia.com/sg1/menu/attribute/icon_4f64279d-17fb-4d8e-bd08-733df8a08c06.png"
+                        "icon": ""
                     },
                     "sequence": 1,
                     "updated_at": "2024-10-18 06:07:14",
@@ -993,7 +993,7 @@ export const pasta = {
     "info": [
         {
             "image": {
-                "icon": "https://static.phdvasia.com/sg1/menu/attribute/icon_4f64279d-17fb-4d8e-bd08-733df8a08c06.png"
+                "icon": ""
             },
             "sequence": 1,
             "name": "New",

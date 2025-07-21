@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { getOrderById, getGuestOrders } from '@/lib/orders';
 import { Order } from '@/types';
 import OrderTrackingModal from '@/components/OrderTrackingModal';
@@ -216,7 +217,7 @@ export default function TrackingPage() {
                     {order.items.slice(0, 3).map((item) => (
                       <div key={item.id} className="flex justify-between items-center text-sm">
                         <div className="flex items-center space-x-2">
-                          <img 
+                          <Image
                             src={item.image} 
                             alt={item.name} 
                             className="w-8 h-8 object-cover rounded"

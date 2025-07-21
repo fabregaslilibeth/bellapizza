@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { Order } from '@/types';
 
 interface OrderTrackingModalProps {
@@ -375,7 +376,7 @@ const OrderTrackingModal: React.FC<OrderTrackingModalProps> = ({ order, isOpen, 
               <div className="space-y-3">
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <img 
+                    <Image 
                       src={item.image} 
                       alt={item.name} 
                       className="w-16 h-16 object-cover rounded-lg"

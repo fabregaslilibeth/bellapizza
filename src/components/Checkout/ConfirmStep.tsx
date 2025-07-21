@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useCheckout } from '@/context/CheckoutContext';
 import { useCart } from '@/context/CartContext';
 import { Order } from '@/types';
@@ -163,7 +164,7 @@ const ConfirmStep: React.FC = () => {
           {orderData?.items?.map((item) => (
             <div key={item.id} className="flex justify-between items-center">
               <div className="flex items-center space-x-3">
-                <img 
+                <Image 
                   src={item.image} 
                   alt={item.name} 
                   className="w-10 h-10 object-cover rounded"

@@ -42,6 +42,7 @@ export default function StoreFinder({ }) {
                   store.longitude!
                 )
               }))
+              .filter(store => store.distance <= 8) // Only show stores within 8km
               .sort((a, b) => a.distance - b.distance)
               .slice(0, 5);
 

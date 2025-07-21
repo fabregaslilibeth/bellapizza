@@ -1,6 +1,6 @@
 [
     {
-      "name": "Pizza Hut Puregold Dau",
+      "name": "Bella Pizza Puregold Dau",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 045-887-1111",
       "services": ["Delivery", "Pickup"],
@@ -8,7 +8,7 @@
       "longitude": 120.588966
     },
     {
-      "name": "Pizza Hut Petron Subic",
+      "name": "Bella Pizza Petron Subic",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 047-250-2222",
       "services": ["Delivery", "Pickup"],
@@ -16,7 +16,7 @@
       "longitude": 120.286354
     },
     {
-      "name": "Pizza Hut Baguio La Trinidad",
+      "name": "Bella Pizza Baguio La Trinidad",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 072-888-1798",
       "services": ["Delivery", "Pickup"],
@@ -24,7 +24,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza hut Nepo Mall Angeles",
+      "name": "Bella Pizza Nepo Mall Angeles",
       "hours": "10:00 AM - 08:00 PM",
       "phone": "(02) 8911-1111 / 045-887-4050",
       "services": ["Delivery", "Pickup"],
@@ -32,7 +32,7 @@
       "longitude": 120.566667
     },
     {
-      "name": "Pizza Hut Baguio Marcos Highway",
+      "name": "Bella Pizza Baguio Marcos Highway",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / (074) 445-1111",
       "services": ["Delivery", "Pickup"],
@@ -40,7 +40,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza Hut Baguio Session Road",
+      "name": "Bella Pizza Baguio Session Road",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 074-446-6320",
       "services": ["Pickup"],
@@ -48,7 +48,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza Hut Starmall Bulacan",
+      "name": "Bella Pizza Starmall Bulacan",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / (044) 769-1658",
       "services": ["Pickup"],
@@ -56,7 +56,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza Hut SM Tarlac",
+      "name": "Bella Pizza SM Tarlac",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / 045-606-0147",
       "services": ["Delivery", "Pickup"],
@@ -64,7 +64,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza Hut Nepomall Dagupan",
+      "name": "Bella Pizza Nepomall Dagupan",
       "hours": "10:00 AM - 08:00 PM",
       "phone": "(02) 8911-1111 / 246-0726",
       "services": ["Delivery", "Pickup"],
@@ -72,7 +72,7 @@
       "longitude": 120.624502
     },
     {
-      "name": "Pizza Hut SM San Jose Del Monte",
+      "name": "Bella Pizza SM San Jose Del Monte",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / 044-913-2434",
       "services": ["Delivery", "Pickup"],
@@ -80,7 +80,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Pampanga",
+      "name": "Bella Pizza SM Pampanga",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / (045) 4552-772",
       "services": ["Delivery", "Pickup"],
@@ -88,7 +88,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Baliuag",
+      "name": "Bella Pizza SM Baliuag",
       "hours": "12:06 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / (044) 761-0779",
       "services": ["Delivery", "Pickup"],
@@ -96,7 +96,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Cabanatuan",
+      "name": "Bella Pizza SM Cabanatuan",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / (046) 951 0360",
       "services": ["Pickup"],
@@ -104,7 +104,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Clark",
+      "name": "Bella Pizza SM Clark",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / 045-499-0083",
       "services": ["Pickup"],
@@ -112,7 +112,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut Baguio City Hall",
+      "name": "Bella Pizza Baguio City Hall",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 074-665-2222",
       "services": ["Delivery", "Pickup"],
@@ -120,7 +120,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut Guiguinto",
+      "name": "Bella Pizza Guiguinto",
       "hours": "10:00 AM - 02:00 AM",
       "phone": "(02) 8911-1111 / 044-931-7999",
       "services": ["Delivery", "Pickup"],
@@ -128,7 +128,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut Vista Mall Malolos",
+      "name": "Bella Pizza Vista Mall Malolos",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / (044) 931-1111",
       "services": ["Delivery", "Pickup"],
@@ -136,7 +136,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Baguio",
+      "name": "Bella Pizza SM Baguio",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111 / 074-619779",
       "services": ["Pickup"],
@@ -152,7 +152,7 @@
       "longitude": null
     },
     {
-      "name": "Pizza Hut SM Tuguegarao",
+      "name": "Bella Pizza SM Tuguegarao",
       "hours": "10:00 AM - 09:00 PM",
       "phone": "(02) 8911-1111",
       "services": ["Pickup", "Dine-In"],
@@ -160,7 +160,7 @@
       "longitude": null
     },
     {
-        "name": "Pizza Hut Ali Mall (Araneta City)",
+        "name": "Bella Pizza Ali Mall (Araneta City)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 8912-1011",
         "services": ["Pickup", "Dine-In"],
@@ -168,7 +168,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Trinoma (Quezon City)",
+        "name": "Bella Pizza Trinoma (Quezon City)",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111 / 8901-3633",
         "services": ["Pickup", "Dine-In"],
@@ -176,7 +176,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Sta. Lucia (Marikina)",
+        "name": "Bella Pizza Sta. Lucia (Marikina)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 681-5238",
         "services": ["Pickup"],
@@ -184,7 +184,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Megamall Bistro",
+        "name": "Bella Pizza SM Megamall Bistro",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111 / 8638-5935",
         "services": ["Pickup", "Dine-In"],
@@ -192,7 +192,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Bistro Robinsons Galleria",
+        "name": "Bella Pizza Bistro Robinsons Galleria",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -200,7 +200,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Taytay",
+        "name": "Bella Pizza SM Taytay",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111 / 661-1971",
         "services": ["Pickup"],
@@ -208,7 +208,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Bistro SM North",
+        "name": "Bella Pizza Bistro SM North",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "8911-1111",
         "services": ["Pickup", "Dine-In"],
@@ -216,7 +216,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Sucat",
+        "name": "Bella Pizza SM Sucat",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 801-1380",
         "services": ["Pickup"],
@@ -224,7 +224,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Ever Commonwealth",
+        "name": "Bella Pizza Ever Commonwealth",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 8931 0126",
         "services": ["Pickup"],
@@ -232,7 +232,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Fisher Mall",
+        "name": "Bella Pizza Fisher Mall",
         "hours": "11:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 8294-1456",
         "services": ["Pickup"],
@@ -240,7 +240,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM San Mateo",
+        "name": "Bella Pizza SM San Mateo",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 645-4836",
         "services": ["Pickup"],
@@ -248,7 +248,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Gateway Food Express (Araneta City)",
+        "name": "Bella Pizza Gateway Food Express (Araneta City)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 8911-8475",
         "services": ["Pickup"],
@@ -256,7 +256,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut New Frontier (Araneta City)",
+        "name": "Bella Pizza New Frontier (Araneta City)",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 8255-0638",
         "services": ["Pickup", "Dine-In"],
@@ -264,7 +264,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Market Market",
+        "name": "Bella Pizza Market Market",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 856-7920",
         "services": ["Pickup"],
@@ -272,7 +272,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut New Farmers (Araneta City)",
+        "name": "Bella Pizza New Farmers (Araneta City)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 8911-1931",
         "services": ["Pickup", "Dine-In"],
@@ -280,7 +280,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Robinsons Ermita",
+        "name": "Bella Pizza Robinsons Ermita",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 536-5656",
         "services": ["Pickup", "Dine-In"],
@@ -288,7 +288,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Bicutan",
+        "name": "Bella Pizza SM Bicutan",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -296,7 +296,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Marikina",
+        "name": "Bella Pizza SM Marikina",
         "hours": "11:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / 8477-1817",
         "services": ["Pickup"],
@@ -304,7 +304,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Fairview",
+        "name": "Bella Pizza SM Fairview",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 935-0040",
         "services": ["Pickup"],
@@ -312,7 +312,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Manila",
+        "name": "Bella Pizza SM Manila",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -320,7 +320,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM San Lazaro",
+        "name": "Bella Pizza SM San Lazaro",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -328,7 +328,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Southmall",
+        "name": "Bella Pizza SM Southmall",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -336,7 +336,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut SM Mall of Asia 2",
+        "name": "Bella Pizza SM Mall of Asia 2",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -344,7 +344,7 @@
         "longitude": null
       },
       {
-        "name": "Pizza Hut Gateway Mall 2 (Araneta City)",
+        "name": "Bella Pizza Gateway Mall 2 (Araneta City)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup", "Dine-In"],
@@ -352,7 +352,7 @@
         "longitude": null
       },
     {
-        "name": "Pizza Hut Bacoor",
+        "name": "Bella Pizza Bacoor",
         "hours": "10:00 AM - 12:00 AM",
         "phone": "(02) 8911-1111 / (046) 417-9004",
         "services": ["Delivery", "Pickup"],
@@ -360,7 +360,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Binan",
+        "name": "Bella Pizza Binan",
         "hours": "10:00 AM - 12:00 AM",
         "phone": "(02) 8911-1111 / (049) 839-1111",
         "services": ["Delivery", "Pickup"],
@@ -368,7 +368,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Dasmarinas",
+        "name": "Bella Pizza Dasmarinas",
         "hours": "10:00 AM - 02:00 AM",
         "phone": "(02) 8911-1111",
         "services": ["Delivery", "Pickup"],
@@ -376,7 +376,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Wind (Tagaytay, Cavite)",
+        "name": "Bella Pizza SM Wind (Tagaytay, Cavite)",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111 / (046) 443-2687",
         "services": ["Delivery", "Pickup"],
@@ -384,7 +384,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Pacific Mall Legazpi",
+        "name": "Bella Pizza Pacific Mall Legazpi",
         "hours": "10:00 AM - 08:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Pickup"],
@@ -392,7 +392,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Ayala Imus",
+        "name": "Bella Pizza Ayala Imus",
         "hours": "10:00 AM - 02:00 AM",
         "phone": "(02) 8911-1111 / (046) 476-0651",
         "services": ["Pickup"],
@@ -400,7 +400,7 @@
         "longitude": 120.9394887926486
     },
     {
-        "name": "Pizza Hut SM Sta. Rosa",
+        "name": "Bella Pizza SM Sta. Rosa",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / (049) 534-4446",
         "services": ["Pickup"],
@@ -408,7 +408,7 @@
         "longitude": 120.9394887926486
     },
     {
-        "name": "Pizza Hut SM San Pablo",
+        "name": "Bella Pizza SM San Pablo",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (049) 521 0074",
         "services": ["Delivery", "Pickup"],
@@ -416,7 +416,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Robinsons Dasmarinas",
+        "name": "Bella Pizza Robinsons Dasmarinas",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (046) 852-2002",
         "services": ["Delivery", "Pickup"],
@@ -424,7 +424,7 @@
         "longitude": 120.936006
     },
     {
-        "name": "Pizza Hut Robinsons Imus",
+        "name": "Bella Pizza Robinsons Imus",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (046) 536-5656",
         "services": ["Delivery", "Pickup"],
@@ -432,7 +432,7 @@
         "longitude": 120.286354
     },
     {
-        "name": "Pizza Hut Robinsons Lipa",
+        "name": "Bella Pizza Robinsons Lipa",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (043) 757-3599",
         "services": ["Delivery", "Pickup"],
@@ -440,7 +440,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Naga",
+        "name": "Bella Pizza SM Naga",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (054) 871-0037",
         "services": ["Pickup"],
@@ -448,7 +448,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Bacoor",
+        "name": "Bella Pizza SM Bacoor",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (046) 416-3861",
         "services": ["Pickup"],
@@ -456,7 +456,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Molino",
+        "name": "Bella Pizza SM Molino",
         "hours": "10:00 AM - 02:00 AM",
         "phone": "(02) 8911-1111 / (046) 474-3110",
         "services": ["Delivery", "Pickup"],
@@ -464,7 +464,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Batangas",
+        "name": "Bella Pizza SM Batangas",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (043) 722-0027",
         "services": ["Delivery", "Pickup"],
@@ -472,7 +472,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Calamba",
+        "name": "Bella Pizza SM Calamba",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / (049) 530-0143",
         "services": ["Delivery", "Pickup"],
@@ -480,7 +480,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Lucena",
+        "name": "Bella Pizza SM Lucena",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (042) 373-2211",
         "services": ["Delivery", "Pickup"],
@@ -488,7 +488,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Lipa",
+        "name": "Bella Pizza SM Lipa",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (043) 784-0244",
         "services": ["Delivery", "Pickup"],
@@ -496,7 +496,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Dasmarinas",
+        "name": "Bella Pizza SM Dasmarinas",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (046) 416-5005",
         "services": ["Delivery", "Pickup"],
@@ -504,7 +504,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Solenad 2 (Laguna)",
+        "name": "Bella Pizza Solenad 2 (Laguna)",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Delivery", "Pickup"],
@@ -512,7 +512,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Southwoods Mall",
+        "name": "Bella Pizza Southwoods Mall",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Delivery", "Pickup"],
@@ -520,7 +520,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Robertson Plaza",
+        "name": "Bella Pizza Robertson Plaza",
         "hours": "10:00 AM - 08:00 PM",
         "phone": "(02) 8911-1111",
         "services": ["Delivery", "Pickup"],
@@ -528,7 +528,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Tanza Cavite",
+        "name": "Bella Pizza Tanza Cavite",
         "hours": "10:00 AM - 12:00 AM",
         "phone": "(02) 8911-1111 / (046) 431-1111",
         "services": ["Delivery", "Pickup"],
@@ -536,7 +536,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Fuente Cebu",
+        "name": "Bella Pizza Fuente Cebu",
         "hours": "10:00 AM - 02:00 AM",
         "phone": "(02) 8911-1111 / (032) 253-7000",
         "services": ["Delivery", "Pickup"],
@@ -544,7 +544,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Gaisano Davao",
+        "name": "Bella Pizza Gaisano Davao",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (082) 222-2222",
         "services": ["Delivery", "Pickup"],
@@ -552,7 +552,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Robinsons Bacolod",
+        "name": "Bella Pizza Robinsons Bacolod",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (034) 441 0101",
         "services": ["Delivery", "Pickup"],
@@ -560,7 +560,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Ayala Cebu",
+        "name": "Bella Pizza Ayala Cebu",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (032) 231-7336",
         "services": ["Pickup"],
@@ -568,7 +568,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Bohol",
+        "name": "Bella Pizza Bohol",
         "hours": "10:00 AM - 07:00 PM",
         "phone": "(02) 8911-1111 / (038) 411-4225",
         "services": ["Delivery", "Pickup"],
@@ -576,7 +576,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Seaside Cebu",
+        "name": "Bella Pizza SM Seaside Cebu",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / 0908-8816166",
         "services": ["Pickup"],
@@ -584,7 +584,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut KCC Mall of Marbel (South Cotabato)",
+        "name": "Bella Pizza KCC Mall of Marbel (South Cotabato)",
         "hours": "10:00 AM - 08:00 PM",
         "phone": "(02) 8911-1111 / (083) 553-2211",
         "services": ["Delivery", "Pickup"],
@@ -592,7 +592,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Parkmall Cebu",
+        "name": "Bella Pizza Parkmall Cebu",
         "hours": "10:00 AM - 11:00 PM",
         "phone": "(02) 8911-1111 / (032) 266-0369",
         "services": ["Delivery", "Pickup"],
@@ -600,7 +600,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Robinsons Roxas",
+        "name": "Bella Pizza Robinsons Roxas",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (036) 651-0308",
         "services": ["Delivery", "Pickup"],
@@ -608,7 +608,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Bacolod",
+        "name": "Bella Pizza SM Bacolod",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / (034) 468-0088",
         "services": ["Delivery", "Pickup"],
@@ -616,7 +616,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Cagayan de Oro",
+        "name": "Bella Pizza SM Cagayan de Oro",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (088) 859-1119",
         "services": ["Delivery", "Pickup"],
@@ -624,7 +624,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Cebu",
+        "name": "Bella Pizza SM Cebu",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (032) 266 6110",
         "services": ["Pickup"],
@@ -632,7 +632,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Davao",
+        "name": "Bella Pizza SM Davao",
         "hours": "10:00 AM - 10:00 PM",
         "phone": "(02) 8911-1111 / (082) 295-1767",
         "services": ["Pickup"],
@@ -640,7 +640,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM General Santos",
+        "name": "Bella Pizza SM General Santos",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (083) 887-0308",
         "services": ["Pickup"],
@@ -648,7 +648,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut SM Iloilo",
+        "name": "Bella Pizza SM Iloilo",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (033) 330 1196",
         "services": ["Pickup"],
@@ -656,7 +656,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Festive Walk Iloilo",
+        "name": "Bella Pizza Festive Walk Iloilo",
         "hours": "10:00 AM - 12:00 AM",
         "phone": "(02) 8911-1111 / (033) 338 3838",
         "services": ["Delivery", "Pickup"],
@@ -664,7 +664,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut KCC Gen San",
+        "name": "Bella Pizza KCC Gen San",
         "hours": "10:00 AM - 09:00 PM",
         "phone": "(02) 8911-1111 / (083) 553 2211",
         "services": ["Pickup"],
@@ -672,7 +672,7 @@
         "longitude": null
     },
     {
-        "name": "Pizza Hut Plaza Divisoria Cagayan De Oro",
+        "name": "Bella Pizza Plaza Divisoria Cagayan De Oro",
         "hours": "10:00 AM - 12:00 AM",
         "phone": "(02) 8911-1111",
         "services": ["Delivery", "Pickup"],
@@ -680,61 +680,61 @@
         "longitude": null
     },
     {
-        "store": "Pizza Hut Alabang",
+        "store": "Bella Pizza Alabang",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup"]
       },
       {
-        "store": "Pizza Hut Angono",
+        "store": "Bella Pizza Angono",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup"]
       },
       {
-        "store": "Pizza Hut Antipolo",
+        "store": "Bella Pizza Antipolo",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup"]
       },
       {
-        "store": "Pizza Hut Aseana (Parañaque)",
+        "store": "Bella Pizza Aseana (Parañaque)",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup"]
       },
       {
-        "store": "Pizza Hut Banawe",
+        "store": "Bella Pizza Banawe",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup"]
       },
       {
-        "store": "Pizza Hut Cherry Congressional",
+        "store": "Bella Pizza Cherry Congressional",
         "hours": "11:00 AM - 10:00 PM",
         "numbers": ["(02) 8911-1111", "8287-5247"],
         "services": ["Pickup"]
       },
       {
-        "store": "Pizza Hut Ayala Marikina",
+        "store": "Bella Pizza Ayala Marikina",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup", "Dine-In"]
       },
       {
-        "store": "Pizza Hut Drive & Dine (Valenzuela)",
+        "store": "Bella Pizza Drive & Dine (Valenzuela)",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup", "Dine-In"]
       },
       {
-        "store": "Pizza Hut Marulas Valenzuela",
+        "store": "Bella Pizza Marulas Valenzuela",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02)8911-1111"],
         "services": ["Delivery", "Pickup", "Dine-In"]
       },
       {
-        "store": "Pizza Hut Pioneer Center",
+        "store": "Bella Pizza Pioneer Center",
         "hours": "10:00 AM - 02:00 AM",
         "numbers": ["(02) 8911-1111"],
         "services": ["Delivery", "Pickup", "Dine-In"]

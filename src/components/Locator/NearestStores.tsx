@@ -6,8 +6,13 @@ import { useOrderPreference } from '@/context/OrderPreferenceContext';
 import { Store } from '@/types';
 
 export default function NearestStores() {
-  const { nearestStores, setSelectedStore, isNearestStoresVisible, setIsNearestStoresVisible } = useOrderPreference();
+  const { nearestStores, setSelectedStore, isNearestStoresVisible, setIsNearestStoresVisible, isLoaded } = useOrderPreference();
   const [myStore, setMyStore] = useState<Store | null>(null);
+
+  // Don't render until localStorage values are loaded to prevent hydration mismatch
+  if (!isLoaded) {
+    return null;
+  }
 
   if (!nearestStores || nearestStores.length === 0) {
     return null;

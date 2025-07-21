@@ -19,6 +19,7 @@ interface OrderPreferenceContextType {
   setIsNearestStoresVisible: (visible: boolean) => void;
   isChangeAddressVisible: boolean;
   setIsChangeAddressVisible: (visible: boolean) => void;
+  isLoaded: boolean;
 }
 
 const OrderPreferenceContext = createContext<OrderPreferenceContextType | undefined>(undefined);
@@ -49,56 +50,70 @@ const loadFromLocalStorage = (key: string, defaultValue: unknown): unknown => {
 };
 
 export function OrderPreferenceProvider({ children }: { children: ReactNode }) {
-  const [isLocatorOpen, setIsLocatorOpen] = useState<boolean>(() => 
-    loadFromLocalStorage('isLocatorOpen', true) as boolean
-  );
-  const [orderPreference, setOrderPreference] = useState<OrderPreference>(() => 
-    loadFromLocalStorage('orderPreference', 'delivery') as OrderPreference
-  );
-  const [address, setAddress] = useState<Address | null>(() => 
-    loadFromLocalStorage('address', null) as Address | null
-  );
-  const [nearestStores, setNearestStores] = useState<Store[]>(() => 
-    loadFromLocalStorage('nearestStores', []) as Store[]
-  );
-  const [selectedStore, setSelectedStore] = useState<Store | null>(() => 
-    loadFromLocalStorage('selectedStore', null) as Store | null
-  );
-  const [isNearestStoresVisible, setIsNearestStoresVisible] = useState<boolean>(() => 
-    loadFromLocalStorage('isNearestStoresVisible', false) as boolean
-  );
-  const [isChangeAddressVisible, setIsChangeAddressVisible] = useState<boolean>(() => 
-    loadFromLocalStorage('isChangeAddressVisible', false) as boolean
-  );
+  // Initialize with default values to prevent hydration mismatch
+  const [isLocatorOpen, setIsLocatorOpen] = useState<boolean>(true);
+  const [orderPreference, setOrderPreference] = useState<OrderPreference>('delivery');
+  const [address, setAddress] = useState<Address | null>(null);
+  const [nearestStores, setNearestStores] = useState<Store[]>([]);
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+  const [isNearestStoresVisible, setIsNearestStoresVisible] = useState<boolean>(false);
+  const [isChangeAddressVisible, setIsChangeAddressVisible] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  // Save to localStorage whenever state changes
+  // Load values from localStorage after component mounts
   useEffect(() => {
-    saveToLocalStorage('isLocatorOpen', isLocatorOpen);
-  }, [isLocatorOpen]);
+    setIsLocatorOpen(loadFromLocalStorage('isLocatorOpen', true) as boolean);
+    setOrderPreference(loadFromLocalStorage('orderPreference', 'delivery') as OrderPreference);
+    setAddress(loadFromLocalStorage('address', null) as Address | null);
+    setNearestStores(loadFromLocalStorage('nearestStores', []) as Store[]);
+    setSelectedStore(loadFromLocalStorage('selectedStore', null) as Store | null);
+    setIsNearestStoresVisible(loadFromLocalStorage('isNearestStoresVisible', false) as boolean);
+    setIsChangeAddressVisible(loadFromLocalStorage('isChangeAddressVisible', false) as boolean);
+    setIsLoaded(true);
+  }, []);
 
+  // Save to localStorage whenever state changes (only after initial load)
   useEffect(() => {
-    saveToLocalStorage('orderPreference', orderPreference);
-  }, [orderPreference]);
+    if (isLoaded) {
+      saveToLocalStorage('isLocatorOpen', isLocatorOpen);
+    }
+  }, [isLocatorOpen, isLoaded]);
 
   useEffect(() => {
-    saveToLocalStorage('address', address);
-  }, [address]);
+    if (isLoaded) {
+      saveToLocalStorage('orderPreference', orderPreference);
+    }
+  }, [orderPreference, isLoaded]);
 
   useEffect(() => {
-    saveToLocalStorage('nearestStores', nearestStores);
-  }, [nearestStores]);
+    if (isLoaded) {
+      saveToLocalStorage('address', address);
+    }
+  }, [address, isLoaded]);
 
   useEffect(() => {
-    saveToLocalStorage('selectedStore', selectedStore);
-  }, [selectedStore]);
+    if (isLoaded) {
+      saveToLocalStorage('nearestStores', nearestStores);
+    }
+  }, [nearestStores, isLoaded]);
 
   useEffect(() => {
-    saveToLocalStorage('isNearestStoresVisible', isNearestStoresVisible);
-  }, [isNearestStoresVisible]);
+    if (isLoaded) {
+      saveToLocalStorage('selectedStore', selectedStore);
+    }
+  }, [selectedStore, isLoaded]);
 
   useEffect(() => {
-    saveToLocalStorage('isChangeAddressVisible', isChangeAddressVisible);
-  }, [isChangeAddressVisible]);
+    if (isLoaded) {
+      saveToLocalStorage('isNearestStoresVisible', isNearestStoresVisible);
+    }
+  }, [isNearestStoresVisible, isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      saveToLocalStorage('isChangeAddressVisible', isChangeAddressVisible);
+    }
+  }, [isChangeAddressVisible, isLoaded]);
 
   return (
     <OrderPreferenceContext.Provider value={{ 
@@ -115,7 +130,8 @@ export function OrderPreferenceProvider({ children }: { children: ReactNode }) {
       isNearestStoresVisible,
       setIsNearestStoresVisible,
       isChangeAddressVisible,
-      setIsChangeAddressVisible
+      setIsChangeAddressVisible,
+      isLoaded
     }}>
       {children}
     </OrderPreferenceContext.Provider>
