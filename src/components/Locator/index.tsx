@@ -3,13 +3,17 @@
 import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import LocationButton from "./LocationButton";
 import AddressSearch from "./AddressSearch";
 import StoreFinder from "./StoreFinder";
 import { useOrderPreference } from "@/context/OrderPreferenceContext";
 
 const Locator = () => {
-  const { orderPreference, setOrderPreference, address, selectedStore, isLocatorOpen, setIsLocatorOpen } = useOrderPreference();
+  const { orderPreference, setOrderPreference, address, selectedStore, isLocatorOpen, setIsLocatorOpen, isLoaded } = useOrderPreference();
+
+  // Don't render until localStorage values are loaded to prevent hydration mismatch
+  if (!isLoaded) {
+    return null;
+  }
 
   // Don't render if either address or selectedStore is set
   if (address || selectedStore) {
@@ -91,7 +95,7 @@ const Locator = () => {
             {orderPreference === "delivery" ? (
               <>
                 <AddressSearch />
-                <LocationButton />
+                {/* <LocationButton /> */}
               </>
             ) : (
               <>

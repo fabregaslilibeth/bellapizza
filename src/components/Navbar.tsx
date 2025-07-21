@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import EmailLoginButton from "./EmailLoginButton";
 import ProfileIcon from "./ProfileIcon";
+import Image from "next/image";
+import bellaLogo from "@/images/bella-logo.png";
 import { 
   GiPizzaSlice, 
   GiNoodles, 
@@ -25,7 +27,6 @@ const navItems = [
   { name: "Melts", href: "/melts", icon: GiSandwich },
   { name: "Sides", href: "/sides", icon: GiFrenchFries },
   { name: "Drinks", href: "/drinks", icon: GiSodaCan },
-  { name: "Track Order", href: "/tracking", icon: GiShoppingCart },
 ];
 
 export default function Navbar() {
@@ -64,7 +65,7 @@ export default function Navbar() {
       <div className="h-24 max-w-[1450px] mx-auto px-8 pb-6 overflow-x-hidden">
         <div className="flex items-center justify-between gap-4 h-full">
           <Link href="/" className="text-2xl font-bold shrink-0">
-            Bella Pizza
+            <Image src={bellaLogo} alt="Bella Pizza" width={100} height={100} />
           </Link>
 
           {/* Desktop Navigation */}

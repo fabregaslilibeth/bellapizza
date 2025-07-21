@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { getCurrentUser } from '@/lib/auth';
@@ -87,9 +88,11 @@ const ProfileIcon: React.FC<ProfileIconProps> = ({
                 </span>
               </div>
             )}
-            <img 
+            <Image 
               src={currentUser.photoURL} 
               alt="Profile" 
+              width={size === 'sm' ? 32 : size === 'md' ? 40 : 48}
+              height={size === 'sm' ? 32 : size === 'md' ? 40 : 48}
               className={`${sizeClasses[size]} rounded-full object-cover ${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200`}
               onLoad={handleImageLoad}
               onError={handleImageError}

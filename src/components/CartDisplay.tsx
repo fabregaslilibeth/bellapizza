@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useCheckout } from '@/context/CheckoutContext';
 import { CartItem } from '@/types';
@@ -89,7 +90,7 @@ const CartDisplay: React.FC = () => {
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="flex items-start space-x-3">
-                        <img 
+                        <Image 
                           src={item.image} 
                           alt={item.name} 
                           className="w-16 h-16 object-cover rounded-lg"

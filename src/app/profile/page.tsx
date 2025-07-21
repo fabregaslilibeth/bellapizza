@@ -70,7 +70,7 @@ export default function ProfilePage() {
     deliveryAddresses: [],
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [activeTab, setActiveTab] = useState(localStorage.getItem('activeTab') || "profile");
+  const [activeTab, setActiveTab] = useState("profile");
   const [isLoading, setIsLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -81,12 +81,19 @@ export default function ProfilePage() {
   // Prevent hydration mismatch by ensuring we're on the client
   useEffect(() => {
     setIsClient(true);
+    // Load active tab from localStorage on client side
+    const savedTab = localStorage.getItem('activeTab');
+    if (savedTab) {
+      setActiveTab(savedTab);
+    }
   }, []);
 
   useEffect(() => {
-    console.log('Saving active tab:', activeTab);
-    localStorage.setItem('activeTab', activeTab);
-  }, [activeTab]);
+    if (isClient) {
+      console.log('Saving active tab:', activeTab);
+      localStorage.setItem('activeTab', activeTab);
+    }
+  }, [activeTab, isClient]);
 
   useEffect(() => {
     if (isClient && isLoggedIn) {
@@ -655,7 +662,7 @@ export default function ProfilePage() {
                           htmlFor="pizzaHutNews"
                           className="text-sm font-medium text-gray-900"
                         >
-                          Receive Pizza Hut news and coupons in HTML mail
+                          Receive Bella Pizza news and coupons in HTML mail
                         </label>
                         <p className="text-xs text-gray-500 mt-1">
                           Get the latest news, updates, and exclusive coupons

@@ -82,12 +82,14 @@ export default function PizzaPage() {
             }`}
             onClick={() => setActiveCategory(category.name)}
           >
-            <Image
-              src={category.image}
-              alt={category.name}
-              width={25}
-              height={16}
-            />
+            {category.image && (
+              <Image
+                src={category.image}
+                alt={category.name}
+                width={20}
+                height={16}
+              />
+            )}
             <h1>{category.name}</h1>
           </div>
         ))}

@@ -5,8 +5,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function OrderPreferenceDisplay() {
-  const { setIsLocatorOpen, orderPreference, address, selectedStore, setIsChangeAddressVisible } =
+  const { setIsLocatorOpen, orderPreference, address, selectedStore, setIsChangeAddressVisible, isLoaded } =
     useOrderPreference();
+
+  // Don't render until localStorage values are loaded to prevent hydration mismatch
+  if (!isLoaded) {
+    return null;
+  }
 
   const getDisplayContent = () => {
     if (address) {
