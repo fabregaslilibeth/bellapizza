@@ -18,12 +18,12 @@ export default function TrackingPage() {
   const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
 
   const handleTrackOrder = async () => {
-    if (!orderId.trim() && trackingMethod === 'orderId') {
+    if (!orderId?.trim() && trackingMethod === 'orderId') {
       setError('Please enter an order ID');
       return;
     }
 
-    if (!email.trim() && trackingMethod === 'email') {
+    if (!email?.trim() && trackingMethod === 'email') {
       setError('Please enter an email address');
       return;
     }
@@ -33,7 +33,7 @@ export default function TrackingPage() {
 
     try {
       if (trackingMethod === 'orderId') {
-        const order = await getOrderById(orderId.trim());
+        const order = await getOrderById(orderId?.trim());
         if (order) {
           setOrders([order]);
         } else {
@@ -41,7 +41,7 @@ export default function TrackingPage() {
           setOrders([]);
         }
       } else {
-        const guestOrders = await getGuestOrders(email.trim());
+        const guestOrders = await getGuestOrders(email?.trim());
         setOrders(guestOrders);
         if (guestOrders.length === 0) {
           setError('No orders found for this email address.');
